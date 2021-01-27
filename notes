@@ -1,0 +1,29 @@
+Interface:
+- User can submit and register an account
+- User can log in
+- User can delete account
+
+User class
+  - attributes => name, password
+  - user signs up/logs in
+  - has a win score
+  - has a lose score
+  - has a total games score
+  - has a win streak score
+
+User controller and views
+  - '/signup' => renders sign up form
+  - '/signup' => processes sign up form, creates user, post
+  - '/login' => renders login form
+  - '/login' => processes login form, post
+  - need to set sessions
+  - user can view their stats, 'user/:id/stats'
+
+Stats class
+  - attributes => name, value
+  - stats belong to user
+
+Where to start?
+- Set upp classes
+- Set up my database
+- Users controller

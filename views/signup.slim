@@ -1,0 +1,23 @@
+form class="signupForm" action="/users/signup" method="post"
+  - if errormsg != ""
+    p #{errormsg}
+  label for="username" Username
+  br
+  input name="username" type="text" placeholder="Write your username"/
+  br
+  label for="password" Password
+  br
+  input name="password" type="password" placeholder="Write your password here"/
+  br
+  label for="confirm_password" Confirm Password
+  br
+  input name="confirm_password" type="password" placeholder="Confirm your password"/
+  br
+  input name="signup" type="submit" value="Submit"/
+  div.login
+    p Already have an account?
+    a href="/login" Log in
+
+
+/add error msg for when username is taken
+/or password and confirm_password does not match

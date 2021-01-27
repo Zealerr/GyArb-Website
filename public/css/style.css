@@ -1,0 +1,25 @@
+body {
+  background-color: darkblue;
+  height: 100%;
+  margin: 0;
+}
+
+p {
+  color: white;
+}
+
+nav {
+  padding: 0;
+
+}
+
+Form {
+  width: 300px;
+  padding: 40px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: grey;
+  text-align: center;
+}

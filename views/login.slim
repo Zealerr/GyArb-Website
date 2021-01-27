@@ -1,0 +1,18 @@
+form action="/users/login" method="post"
+  - if errormsg != ""
+    p #{errormsg}
+  label for="username" Username 
+  br
+  input name="username" type="text" placeholder="Write username Here"/ 
+  br
+  label for="password" Password
+  br
+  input name="password" type="password" placeholder="Write your password here"/  
+  br
+  input type="submit" value="Log In"/
+  div.signup
+    p Don't have an account? 
+    a href="/signup" Sign up
+
+
+/add error messaage if password or username is wrong

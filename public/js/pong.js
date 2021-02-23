@@ -19,8 +19,10 @@ var playerTouch = false
 var CPUTouch = false
 var ballHitY = 200
 var calcDone = false
+var CPUID = ""
 var CPUName = ""
-var CPUPool = ["Mark", "Kyle", "Sandra"]
+var CPUIDPool = ["CPU1", "CPU2", "CPU3"]
+var CPUNamePool = ["Mark", "Sandra", "dddddd", "LAVA", "help", "mariah", "abc", "Ludwig", "lukas", "maya"]
 var time = 0
 var timeMark = 0
 var gameReady = false
@@ -33,13 +35,18 @@ function startButtonPressed(){
     gameReady = true
     opponentWhen = time + 3 + Math.round(Math.random() * 7)
     startButton.innerHTML = "Searching for opponent..."
+    startButton.classList.toggle("startButtonClick")
+    startButton.removeEventListener("click", startButtonPressed)
+    document.getElementById("opponentName").innerHTML = "Searching for opponent..."
 }
 
 function startGame(){
     gameReady = false
-    CPUName = CPUPool[Math.round(Math.random() * 2)]
+    CPUID = CPUIDPool[Math.round(Math.random() * (CPUIDPool.length - 1))]
+    console.log(CPUIDPool.length);
+    CPUName = CPUNamePool[Math.round(Math.random() * (CPUNamePool.length - 1))]
     document.getElementById("opponentName").innerHTML = "Opponent: " + CPUName
-    startButton.classList.toggle("startButtonPressed")
+    startButton.classList.toggle("startButtonGone")
     newGame();
     gameOn = true
 }
@@ -187,6 +194,13 @@ function drawPoints(){
     context.fillStyle = "rgba(255, 255, 255, 0.2)";
     context.fillText(playerPoints, 200, 100);
     context.fillText(CPUPoints, 570, 100);
+
+    if (newRound == true){
+        context.font = "60px Helvetica";
+        context.fillStyle = "rgba(255, 255, 255, 0.2)";
+        context.fillText((timeMark + 3) - time, 385, 300);
+    }
+
 }
 
 function render(){
@@ -201,20 +215,40 @@ function CPUPlay(){
 
         //give them invisible IDs instead and randomize names? then can also add more names
         
-        if (CPUName == "Kyle"){
-            kylePlay();
+        if (CPUID == "CPU1"){
+            CPU1Play();
         }
-        if (CPUName == "Mark"){
-            markPlay();
+        if (CPUID == "CPU2"){
+            CPU2Play();
         }
-        if (CPUName == "Sandra"){
-            sandraPlay();
+        if (CPUID == "CPU3"){
+            CPU3Play();
         }
 
     }
 }
 
-function markPlay(){
+function CPU1Play(){
+    if (ballVelocityX > 0){
+        if (CPUPositionY > ballPositionY + ballVelocityY * 20 ){
+            CPUVelocityY = -1.2
+        }
+        if (CPUPositionY + 60 < ballPositionY - ballVelocityY * 20){
+            CPUVelocityY = 1.2
+        }
+    }
+    if (ballVelocityX < 0){
+        CPURand = Math.random()
+        if (CPURand > 0.95 && CPUPositionY < 150) {
+            CPUVelocityY = 1.2
+        }
+        if (CPURand > 0.95 && CPUPositionY > 190) {
+            CPUVelocityY = -1.2
+        }
+    } 
+}
+
+function CPU2Play(){
     if (ballVelocityX > 0 && calcDone == false){
         ballHitY = ballPositionY + ((800 - ballPositionX)/ballVelocityX) * ballVelocityY
         if (ballHitY > 400){
@@ -247,27 +281,7 @@ function markPlay(){
     }
 }
 
-function kylePlay(){
-    if (ballVelocityX > 0){
-        if (CPUPositionY > ballPositionY + ballVelocityY * 20 ){
-            CPUVelocityY = -1.2
-        }
-        if (CPUPositionY + 60 < ballPositionY - ballVelocityY * 20){
-            CPUVelocityY = 1.2
-        }
-    }
-    if (ballVelocityX < 0){
-        CPURand = Math.random()
-        if (CPURand > 0.95 && CPUPositionY < 150) {
-            CPUVelocityY = 1.2
-        }
-        if (CPURand > 0.95 && CPUPositionY > 190) {
-            CPUVelocityY = -1.2
-        }
-    } 
-}
-
-function sandraPlay(){
+function CPU3Play(){
     if (CPUPositionY > ballPositionY){
         CPUVelocityY = -1.2
     }
@@ -282,7 +296,7 @@ function pingUpdate(){
 
 function timer(){
     time = time + 1
-    if (time == timeMark + opponentWhen && gameReady == true){
+    if (time == opponentWhen && gameReady == true){
         startGame();
     }
     if (time == timeMark + 3 && newRound == true){

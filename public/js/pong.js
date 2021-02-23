@@ -19,10 +19,12 @@ var playerTouch = false
 var CPUTouch = false
 var ballHitY = 200
 var calcDone = false
+var CPUID = ""
 var CPUName = ""
-var CPUPool = ["Mark", "Kyle", "Sandra"]
+var CPUIDPool = ["CPU1", "CPU2", "CPU3"]
+var CPUNamePool = ["Mark", "Sandra", "dddddd", "LAVA", "help", "mariah", "abc", "Ludwig", "lukas", "maya"]
 var time = 0
-var timeMark = 0
+var timeCPU2 = 0
 var gameReady = false
 var newRound = false
 var opponentWhen = 0
@@ -37,7 +39,9 @@ function startButtonPressed(){
 
 function startGame(){
     gameReady = false
-    CPUName = CPUPool[Math.round(Math.random() * 2)]
+    CPUID = CPUIDPool[Math.round(Math.random() * (CPUIDPool.length - 1))]
+    console.log(CPUIDPool.length);
+    CPUName = CPUNamePool[Math.round(Math.random() * (CPUNamePool.length - 1))]
     document.getElementById("opponentName").innerHTML = "Opponent: " + CPUName
     startButton.classList.toggle("startButtonPressed")
     newGame();
@@ -120,7 +124,7 @@ function drawBall(){
 
 function newGame(){
     newRound = true
-    timeMark = time
+    timeCPU2 = time
 
     playerTouch = false
     CPUTouch = false
@@ -201,20 +205,20 @@ function CPUPlay(){
 
         //give them invisible IDs instead and randomize names? then can also add more names
         
-        if (CPUName == "Kyle"){
-            kylePlay();
+        if (CPUID == "CPU1"){
+            CPU1Play();
         }
-        if (CPUName == "Mark"){
-            markPlay();
+        if (CPUID == "CPU2"){
+            CPU2Play();
         }
-        if (CPUName == "Sandra"){
-            sandraPlay();
+        if (CPUID == "CPU3"){
+            CPU3Play();
         }
 
     }
 }
 
-function markPlay(){
+function CPU2Play(){
     if (ballVelocityX > 0 && calcDone == false){
         ballHitY = ballPositionY + ((800 - ballPositionX)/ballVelocityX) * ballVelocityY
         if (ballHitY > 400){
@@ -247,7 +251,7 @@ function markPlay(){
     }
 }
 
-function kylePlay(){
+function CPU1Play(){
     if (ballVelocityX > 0){
         if (CPUPositionY > ballPositionY + ballVelocityY * 20 ){
             CPUVelocityY = -1.2
@@ -267,7 +271,7 @@ function kylePlay(){
     } 
 }
 
-function sandraPlay(){
+function CPU3Play(){
     if (CPUPositionY > ballPositionY){
         CPUVelocityY = -1.2
     }
@@ -282,10 +286,10 @@ function pingUpdate(){
 
 function timer(){
     time = time + 1
-    if (time == timeMark + opponentWhen && gameReady == true){
+    if (time == timeCPU2 + opponentWhen && gameReady == true){
         startGame();
     }
-    if (time == timeMark + 3 && newRound == true){
+    if (time == timeCPU2 + 3 && newRound == true){
         newGameStart();
     }
 }

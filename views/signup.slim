@@ -1,22 +1,16 @@
 form class="signupForm" action="/users/signup" method="post"
-  label for="username" Username
+  input class="username" name="username" type="text" placeholder="Username" pattern="[0-9a-zA-Z]{3,16}" title="Username must be between 3 and 16 characters, and only include letters or numbers as well as at least one capitalized letter.  " required="required"/
   br
-  input class="username" name="username" type="text" placeholder="Write your username"/
+  input class="password" name="password" type="password" placeholder="Password" pattern="[0-9a-zA-Z]{8,24}" title="Username must be 8 and 24 characters, and only include letters or numbers as well as at least one capitalized letter.  " required="required"/
   br
-  label for="password" Password
-  br
-  input class="password" name="password" type="password" placeholder="Write your password here"/
-  br
-  label for="confirm_password" Confirm Password
-  br
-  input class="confirm_pass" name="confirm_password" type="password" placeholder="Confirm your password"/
+  input class="confirm_pass" name="confirm_password" type="password" placeholder="Confirm your password" pattern="[0-9a-zA-Z]{8,24}" title="Username must be 8 and 24 characters, and only include letters or numbers as well as at least one capitalized letter." required="required"/
   br
   input name="signup" type="submit" value="Submit"/
   div.login
-    p Already have an account?
+    h2 Already have an account?
     a href="/login" Log in
 
 
 /add error msg for when username is taken
 /or password and confirm_password does not match
-script src="js/errormsg.js"
+/ script src="js/errormsg.js"

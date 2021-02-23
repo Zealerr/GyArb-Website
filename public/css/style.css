@@ -5,7 +5,7 @@ body, body * {
   box-sizing: unset;
   padding: 0;
   font-size: unset;
-  color: white;
+  color: black;
   text-decoration: unset;
 }
 
@@ -21,7 +21,6 @@ body {
 :root{
   --headerclr: #2c3e50;
 }
-
 
 /* whole page grid - general template*/
 /* grid unused at the moment */
@@ -121,4 +120,51 @@ form {
   0%{background-position:0% 50%}
   50%{background-position:100% 50%}
   100%{background-position:0% 50%}
+}
+
+
+#pingpong{
+  margin: 80px 0 0 299px;
+  border: 1px solid black;
+  
+}
+
+#gameInfo{
+  width: 800px;
+  margin: 0 auto 0 auto;
+  display: grid;
+  grid-template-columns: 710px 90px;
+  
+}
+
+#opponentName{
+  width: 710px;;
+}
+
+#pingMS{
+  width: 90px;
+  justify-content: right;
+}
+
+.startButton{
+  background-color: white;
+  width: 150px;
+  height: 40px;
+  padding-top: 20px;
+  text-align: center;
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: bold;
+  position: absolute;
+  top: 370px;
+  left: 690px;
+}
+
+.startButtonPressed{
+  transform: translateY(-600px);
+}
+
+.bigLink {
+  width: 100px;
+  height: 40px;
+  background-color: grey;
 }

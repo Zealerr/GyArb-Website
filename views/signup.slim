@@ -1,17 +1,15 @@
 form class="signupForm" action="/users/signup" method="post"
-  - if errormsg != ""
-    p #{errormsg}
   label for="username" Username
   br
-  input name="username" type="text" placeholder="Write your username"/
+  input class="username" name="username" type="text" placeholder="Write your username"/
   br
   label for="password" Password
   br
-  input name="password" type="password" placeholder="Write your password here"/
+  input class="password" name="password" type="password" placeholder="Write your password here"/
   br
   label for="confirm_password" Confirm Password
   br
-  input name="confirm_password" type="password" placeholder="Confirm your password"/
+  input class="confirm_pass" name="confirm_password" type="password" placeholder="Confirm your password"/
   br
   input name="signup" type="submit" value="Submit"/
   div.login

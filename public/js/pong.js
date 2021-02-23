@@ -35,6 +35,9 @@ function startButtonPressed(){
     gameReady = true
     opponentWhen = time + 3 + Math.round(Math.random() * 7)
     startButton.innerHTML = "Searching for opponent..."
+    startButton.classList.toggle("startButtonClick")
+    startButton.removeEventListener("click", startButtonPressed)
+    document.getElementById("opponentName").innerHTML = "Searching for opponent..."
 }
 
 function startGame(){
@@ -43,7 +46,7 @@ function startGame(){
     console.log(CPUIDPool.length);
     CPUName = CPUNamePool[Math.round(Math.random() * (CPUNamePool.length - 1))]
     document.getElementById("opponentName").innerHTML = "Opponent: " + CPUName
-    startButton.classList.toggle("startButtonPressed")
+    startButton.classList.toggle("startButtonGone")
     newGame();
     gameOn = true
 }

@@ -24,7 +24,7 @@ var CPUName = ""
 var CPUIDPool = ["CPU1", "CPU2", "CPU3"]
 var CPUNamePool = ["Mark", "Sandra", "dddddd", "LAVA", "help", "mariah", "abc", "Ludwig", "lukas", "maya"]
 var time = 0
-var timeCPU2 = 0
+var timeMark = 0
 var gameReady = false
 var newRound = false
 var opponentWhen = 0
@@ -124,7 +124,7 @@ function drawBall(){
 
 function newGame(){
     newRound = true
-    timeCPU2 = time
+    timeMark = time
 
     playerTouch = false
     CPUTouch = false
@@ -191,6 +191,13 @@ function drawPoints(){
     context.fillStyle = "rgba(255, 255, 255, 0.2)";
     context.fillText(playerPoints, 200, 100);
     context.fillText(CPUPoints, 570, 100);
+
+    if (newRound == true){
+        context.font = "60px Helvetica";
+        context.fillStyle = "rgba(255, 255, 255, 0.2)";
+        context.fillText((timeMark + 3) - time, 385, 300);
+    }
+
 }
 
 function render(){
@@ -216,6 +223,26 @@ function CPUPlay(){
         }
 
     }
+}
+
+function CPU1Play(){
+    if (ballVelocityX > 0){
+        if (CPUPositionY > ballPositionY + ballVelocityY * 20 ){
+            CPUVelocityY = -1.2
+        }
+        if (CPUPositionY + 60 < ballPositionY - ballVelocityY * 20){
+            CPUVelocityY = 1.2
+        }
+    }
+    if (ballVelocityX < 0){
+        CPURand = Math.random()
+        if (CPURand > 0.95 && CPUPositionY < 150) {
+            CPUVelocityY = 1.2
+        }
+        if (CPURand > 0.95 && CPUPositionY > 190) {
+            CPUVelocityY = -1.2
+        }
+    } 
 }
 
 function CPU2Play(){
@@ -251,26 +278,6 @@ function CPU2Play(){
     }
 }
 
-function CPU1Play(){
-    if (ballVelocityX > 0){
-        if (CPUPositionY > ballPositionY + ballVelocityY * 20 ){
-            CPUVelocityY = -1.2
-        }
-        if (CPUPositionY + 60 < ballPositionY - ballVelocityY * 20){
-            CPUVelocityY = 1.2
-        }
-    }
-    if (ballVelocityX < 0){
-        CPURand = Math.random()
-        if (CPURand > 0.95 && CPUPositionY < 150) {
-            CPUVelocityY = 1.2
-        }
-        if (CPURand > 0.95 && CPUPositionY > 190) {
-            CPUVelocityY = -1.2
-        }
-    } 
-}
-
 function CPU3Play(){
     if (CPUPositionY > ballPositionY){
         CPUVelocityY = -1.2
@@ -286,10 +293,10 @@ function pingUpdate(){
 
 function timer(){
     time = time + 1
-    if (time == timeCPU2 + opponentWhen && gameReady == true){
+    if (time == opponentWhen && gameReady == true){
         startGame();
     }
-    if (time == timeCPU2 + 3 && newRound == true){
+    if (time == timeMark + 3 && newRound == true){
         newGameStart();
     }
 }

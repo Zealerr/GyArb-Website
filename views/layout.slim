@@ -3,8 +3,26 @@ html lang="en"
   head
     meta charset="UTF-8"/
     meta name="viewport" content="width=device-width, initial-scale=1.0"/
+
     title GyArb
-    / link rel="stylesheet" href="css/style.css" type="text/css"/
+    link rel="stylesheet" href="css/style.css" type="text/css"/
   body
-    
-    == yield
+    div class="pagewrapper gradientAnim"
+      header
+        div class="logo"
+          a href="/" Fnuny Games Online!
+        nav
+          ul class="menu"
+            -if session[:username] == nil
+              li
+                a href="/login" class="menubtn logbtn" Log in
+              li
+                a href="/signup" class="menubtn signbtn" Sign up
+            -if session[:username] != nil
+              li
+                a href="/home" class="menulink" Play Pong!
+              li
+                a href="/account" class="menulink" Account
+              li 
+                a href="/logout" class="menubtn " Log out
+      == yield

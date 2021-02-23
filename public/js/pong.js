@@ -21,23 +21,28 @@ var ballHitY = 200
 var calcDone = false
 var CPUName = ""
 var CPUPool = ["Mark", "Kyle", "Sandra"]
+var time = 0
+var timeMark = 0
+var gameReady = false
+var newRound = false
+var opponentWhen = 0
 
+startButton.addEventListener("click", startButtonPressed)
 
-function pickOpponent(){
+function startButtonPressed(){
+    gameReady = true
+    opponentWhen = time + 3 + Math.round(Math.random() * 7)
+    startButton.innerHTML = "Searching for opponent..."
+}
+
+function startGame(){
+    gameReady = false
     CPUName = CPUPool[Math.round(Math.random() * 2)]
     document.getElementById("opponentName").innerHTML = "Opponent: " + CPUName
     startButton.classList.toggle("startButtonPressed")
-}
-
-startButton.addEventListener("click", findGame)
-
-function findGame(){
-    pickOpponent();
     newGame();
     gameOn = true
 }
-
-
 
 function clearCanvas(){
     context.fillStyle = "rgba(0, 0, 0, 0.15)";
@@ -114,16 +119,22 @@ function drawBall(){
 }
 
 function newGame(){
-
-    //add a second or two delay?
+    newRound = true
+    timeMark = time
 
     playerTouch = false
     CPUTouch = false
     ballPositionY = 200
     ballPositionX = 400
+    ballVelocityX = 0
     ballVelocityY = 0
     playerPositionY = 170
     CPUPositionY = 170
+}
+
+function newGameStart(){
+
+    newRound = false
 
     if (playerPoints < CPUPoints){
         ballVelocityX = -1
@@ -178,7 +189,7 @@ function drawPoints(){
     context.fillText(CPUPoints, 570, 100);
 }
 
-function Render(){
+function render(){
 clearCanvas();
 drawBall();
 drawBodies();
@@ -269,9 +280,21 @@ function pingUpdate(){
     document.getElementById("pingMS").innerHTML = "Ping is " + String(12 + Math.round(Math.random() * 3)) + " ms"
 }
 
+function timer(){
+    time = time + 1
+    if (time == timeMark + opponentWhen && gameReady == true){
+        startGame();
+    }
+    if (time == timeMark + 3 && newRound == true){
+        newGameStart();
+    }
+}
+
 pingUpdate();
 
-setInterval(Render, 5);
+setInterval(timer, 1000);
+
+setInterval(render, 5);
 
 setInterval(CPUPlay, 100);
 

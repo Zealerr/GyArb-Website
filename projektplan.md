@@ -23,3 +23,24 @@ URL(routes) | HTTP Verb | Action | Förklaring
 /user/account | GET | show | visa användarens info (endast för användaren som är inloggad)
 /user/stats | GET | stats | visa användarens stats samt leaderboards med alla användare i databasen. 
 /game | GET | game | spelet körs här.
+
+## 6. Spel funktioner idéer
+
+- Win on 3 points? 5?
+
+- Stoppable movement (Instead of always having to move up or down)
+  >Feels better to control?
+  >Adds more possible AI behaviours?
+
+- Special events (rage quit and similar)
+  >Stimulate how erratic human behavior can be
+
+- Additional content on website (Information about the project, how to do etc.)
+
+- More AI types
+  >Might be figured out if repetitive
+  >Solve by not queueing against the same AI ID several times?
+
+
+
+

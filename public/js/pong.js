@@ -126,9 +126,6 @@ function drawBall(){
 }
 
 function newGame(){
-    newRound = true
-    timeMark = time
-
     playerTouch = false
     CPUTouch = false
     ballPositionY = 200
@@ -137,6 +134,24 @@ function newGame(){
     ballVelocityY = 0
     playerPositionY = 170
     CPUPositionY = 170
+
+    if (playerPoints < 5 && CPUPoints < 5){
+        newRound = true
+        timeMark = time
+    }
+    if (playerPoints == 5 || CPUPoints == 5){
+        clearInterval(rendering);
+        context.fillStyle = "rgba(0, 0, 0, 1)";
+        context.fillRect(0, 0, 800, 400)
+        startButton.classList.toggle("startButtonGone")
+        if (playerPoints == 5){
+            startButton.innerHTML = "Game over. You win."
+        }else{
+            startButton.innerHTML = "Game over. You lose."
+        }
+
+    } 
+
 }
 
 function newGameStart(){
@@ -308,7 +323,7 @@ pingUpdate();
 
 setInterval(timer, 1000);
 
-setInterval(render, 5);
+var rendering = setInterval(render, 5);
 
 setInterval(CPUPlay, 100);
 

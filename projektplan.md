@@ -26,7 +26,7 @@ URL(routes) | HTTP Verb | Action | Förklaring
 
 ## 6. Spel funktioner idéer
 
-- Win on 3 points? 5?
+- !!!!!! game pauses when tabbed out
 
 - Stoppable movement (Instead of always having to move up or down)
   >Feels better to control?

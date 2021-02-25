@@ -131,12 +131,16 @@ form {
   width: 1400px;
 }
 
-.pingpong{
-  border: 1px solid black;
-  position: relative;
-  top: 50%; 
+.gameMain{
+  width: 1100px;
+  height: 700px;
+  min-height: 600px;
+  background-color: gray;
+  position: absolute;
   left: 50%;
-  transform: translate(-50%, -50%);
+  top: 100px;
+  transform:translate(-50%);
+  
 }
 
 .gameInfo{
@@ -144,20 +148,9 @@ form {
   display: grid;
   grid-template-columns: 710px 90px;
   position: relative;
-  top: 23%;
+  top: 50px;
   left: 50%;
   transform: translate(-50%);
-}
-
-.gameMain{
-  width: 1400px;
-  height: 40vw;
-  min-height: 600px;
-  background-color: gray;
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform:translate(-50%,-50%)
 }
 
 .opponentName{
@@ -167,6 +160,14 @@ form {
 .pingMS{
   width: 90px;
   justify-content: right;
+}
+
+.pingpong{
+  border: 1px solid black;
+  position: relative;
+  top: 50px; 
+  left: 50%;
+  transform: translate(-50%);
 }
 
 .startButton{
@@ -180,7 +181,7 @@ form {
   font-weight: bold;
   position: relative;
   left: 50%;
-  top: -5%;
+  top: -12%;
   transform:translate(-50%);
   -webkit-user-select: none;
   -ms-user-select: none; 

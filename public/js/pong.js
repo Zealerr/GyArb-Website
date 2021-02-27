@@ -1,5 +1,4 @@
 const canvas = document.getElementById("pingpong");
-
 const context = canvas.getContext("2d");
 
 var ballPositionX = 400
@@ -22,7 +21,7 @@ var calcDone = false
 var CPUID = ""
 var CPUName = ""
 var CPUIDPool = ["CPU1", "CPU2", "CPU3"]
-var CPUNamePool = ["Mark", "Sandra", "dddddd", "LAVA", "help", "mariah", "abc", "Ludwig", "lukas", "maya"]
+var CPUNamePool = ["Mark", "Sandra", "Opponent", "dddddd", "LAVA", "help", "mariah", "abc", "Ludwig", "lukas", "maya"]
 var time = 0
 var timeMark = 0
 var gameReady = false
@@ -57,9 +56,7 @@ function clearCanvas(){
 }
 
 function drawBall(){
-
     if (gameOn == true){
-
         ballPositionX = ballPositionX + ballVelocityX
         if (ballPositionX > 793){
             playerPoints = playerPoints + 1
@@ -69,13 +66,11 @@ function drawBall(){
             CPUPoints = CPUPoints + 1
             newGame();
         } 
-
         ballPositionY = ballPositionY + ballVelocityY
         if (ballPositionY < 7 || ballPositionY > 393){
             ballVelocityY = ballVelocityY * -1
         } 
     }
-
     if (ballPositionY >= playerPositionY - 2 && ballPositionY <= playerPositionY + 62){
         if (ballPositionX <= 32 && playerTouch == false){
         ballVelocityX = ballVelocityX * -1.1    
@@ -92,7 +87,6 @@ function drawBall(){
         CPUTouch = true
         }
     }
-
     if (ballVelocityX > 2 || ballVelocityX < -2){
         context.fillStyle = "rgba(255, 255, 0, 0.5)";
         context.beginPath();
@@ -100,7 +94,6 @@ function drawBall(){
         context.closePath();
         context.fill();
     }
-
     if (ballVelocityX > 2.75 || ballVelocityX < -2.75){
         context.fillStyle = "rgba(255, 100, 0, 1)";
         context.beginPath();
@@ -108,7 +101,6 @@ function drawBall(){
         context.closePath();
         context.fill();
     }
-
     if (ballVelocityX > 4 || ballVelocityX < -4){
         context.fillStyle = "rgba(255, 0, 0, 0.75)";
         context.beginPath();
@@ -116,19 +108,14 @@ function drawBall(){
         context.closePath();
         context.fill();
     }
-
     context.fillStyle = "white";
     context.beginPath();
     context.arc(ballPositionX, ballPositionY, 10, 0, Math.PI*2, false);
     context.closePath();
     context.fill();
-
 }
 
 function newGame(){
-    newRound = true
-    timeMark = time
-
     playerTouch = false
     CPUTouch = false
     ballPositionY = 200
@@ -137,12 +124,25 @@ function newGame(){
     ballVelocityY = 0
     playerPositionY = 170
     CPUPositionY = 170
+    if (playerPoints < 5 && CPUPoints < 5){
+        newRound = true
+        timeMark = time
+    }
+    if (playerPoints == 5 || CPUPoints == 5){
+        clearInterval(rendering);
+        context.fillStyle = "rgba(0, 0, 0, 1)";
+        context.fillRect(0, 0, 800, 400)
+        startButton.classList.toggle("startButtonGone")
+        if (playerPoints == 5){
+            startButton.innerHTML = "Game over. You win."
+        }else{
+            startButton.innerHTML = "Game over. You lose."
+        }
+    } 
 }
 
 function newGameStart(){
-
     newRound = false
-
     if (playerPoints < CPUPoints){
         ballVelocityX = -1
     }
@@ -163,10 +163,8 @@ function drawBodies(){
     if (playerPositionY <= 0 || playerPositionY >= 340){
         playerVelocityY = playerVelocityY * -1
     }
-
     context.fillStyle = "white";
     context.fillRect(10, playerPositionY, 15, 60);
-
     CPUPositionY = CPUPositionY + CPUVelocityY
     if (CPUPositionY <= 0 || CPUPositionY >= 340){
         CPUVelocityY = CPUVelocityY * -1
@@ -194,13 +192,11 @@ function drawPoints(){
     context.fillStyle = "rgba(255, 255, 255, 0.2)";
     context.fillText(playerPoints, 200, 100);
     context.fillText(CPUPoints, 570, 100);
-
     if (newRound == true){
         context.font = "60px Helvetica";
         context.fillStyle = "rgba(255, 255, 255, 0.2)";
         context.fillText((timeMark + 3) - time, 385, 300);
     }
-
 }
 
 function render(){
@@ -211,10 +207,7 @@ drawPoints();
 }
 
 function CPUPlay(){
-    if (gameOn == true){
-
-        //give them invisible IDs instead and randomize names? then can also add more names
-        
+    if (gameOn == true){   
         if (CPUID == "CPU1"){
             CPU1Play();
         }
@@ -224,7 +217,6 @@ function CPUPlay(){
         if (CPUID == "CPU3"){
             CPU3Play();
         }
-
     }
 }
 
@@ -305,18 +297,7 @@ function timer(){
 }
 
 pingUpdate();
-
 setInterval(timer, 1000);
-
-setInterval(render, 5);
-
 setInterval(CPUPlay, 100);
-
 setInterval(pingUpdate, 5000)
-
-
-
-
-
-
-
+var rendering = setInterval(render, 5);

@@ -27,6 +27,7 @@ var timeMark = 0
 var gameReady = false
 var newRound = false
 var opponentWhen = 0
+var bodySpeed = 1.2
 
 startButton.addEventListener("click", startButtonPressed)
 
@@ -108,6 +109,13 @@ function drawBall(){
         context.closePath();
         context.fill();
     }
+    if (ballVelocityX > 6 || ballVelocityX < -6){
+        context.fillStyle = "rgba(78, 23, 187, 0.75)";
+        context.beginPath();
+        context.arc(ballPositionX - ballVelocityX, ballPositionY - ballVelocityY, 10, 0, Math.PI*2, false);
+        context.closePath();
+        context.fill();
+    }
     context.fillStyle = "white";
     context.beginPath();
     context.arc(ballPositionX, ballPositionY, 10, 0, Math.PI*2, false);
@@ -157,32 +165,41 @@ function newGameStart(){
     }
 }
 
-
 function drawBodies(){
-    playerPositionY = playerPositionY + playerVelocityY;
     if (playerPositionY <= 0 || playerPositionY >= 340){
-        playerVelocityY = playerVelocityY * -1
+        playerVelocityY = 0
     }
+    if (CPUPositionY <= 0 || CPUPositionY >= 340){
+        CPUVelocityY = 0
+    }
+    playerPositionY = playerPositionY + playerVelocityY;
     context.fillStyle = "white";
     context.fillRect(10, playerPositionY, 15, 60);
     CPUPositionY = CPUPositionY + CPUVelocityY
-    if (CPUPositionY <= 0 || CPUPositionY >= 340){
-        CPUVelocityY = CPUVelocityY * -1
-    }
     context.fillStyle = "white";
     context.fillRect(775, CPUPositionY, 15, 60);
 }
 
 document.onkeydown = playerMove;
+document.onkeyup = playerStop;
 
 function playerMove(e){
     e.preventDefault();
     if (gameOn == true){
         if (e.code == "ArrowUp" && playerPositionY > 0){
-            playerVelocityY = -1.2
+            playerVelocityY = -bodySpeed
         }
         if (e.code == "ArrowDown" && playerPositionY < 339){
-            playerVelocityY = 1.2
+            playerVelocityY = bodySpeed
+        }
+    }
+}
+
+function playerStop(e){
+    e.preventDefault();
+    if (gameOn == true){
+        if (e.code == "ArrowUp" || e.code == "ArrowDown"){
+            playerVelocityY = 0
         }
     }
 }
@@ -223,19 +240,19 @@ function CPUPlay(){
 function CPU1Play(){
     if (ballVelocityX > 0){
         if (CPUPositionY > ballPositionY + ballVelocityY * 20 ){
-            CPUVelocityY = -1.2
+            CPUVelocityY = -bodySpeed
         }
         if (CPUPositionY + 60 < ballPositionY - ballVelocityY * 20){
-            CPUVelocityY = 1.2
+            CPUVelocityY = bodySpeed
         }
     }
     if (ballVelocityX < 0){
         CPURand = Math.random()
         if (CPURand > 0.95 && CPUPositionY < 150) {
-            CPUVelocityY = 1.2
+            CPUVelocityY = bodySpeed
         }
         if (CPURand > 0.95 && CPUPositionY > 190) {
-            CPUVelocityY = -1.2
+            CPUVelocityY = -bodySpeed
         }
     } 
 }
@@ -256,29 +273,29 @@ function CPU2Play(){
     }
     if (ballVelocityX > 0){
         if (CPUPositionY + 10 > ballHitY + (800 - ballPositionX)/5){
-            CPUVelocityY = -1.2
+            CPUVelocityY = -bodySpeed
         }
         if (CPUPositionY + 50 < ballHitY - (770 - ballPositionX)/5){
-            CPUVelocityY = 1.2
+            CPUVelocityY = bodySpeed
         }
     }
     if (ballVelocityX < 0){
         CPURand = Math.random()
         if (CPURand > 0.95 && CPUPositionY < 150) {
-            CPUVelocityY = 1.2
+            CPUVelocityY = bodySpeed
         }
         if (CPURand > 0.95 && CPUPositionY > 190) {
-            CPUVelocityY = -1.2
+            CPUVelocityY = -bodySpeed
         }
     }
 }
 
 function CPU3Play(){
     if (CPUPositionY > ballPositionY){
-        CPUVelocityY = -1.2
+        CPUVelocityY = -bodySpeed
     }
     if (CPUPositionY + 60 < ballPositionY){
-        CPUVelocityY = 1.2
+        CPUVelocityY = bodySpeed
     }
 }
 

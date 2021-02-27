@@ -187,7 +187,7 @@ form {
 }
 
 .gradientAnim {
-  background: linear-gradient(270deg,  #4e17bb, #d18c1c, #c30a28);
+  background: linear-gradient(270deg,  rgb(78, 23, 187), #d18c1c, #c30a28);
   background-size: 1000% 1000%;
 
   -webkit-animation: GradientAnimation 40s ease infinite;

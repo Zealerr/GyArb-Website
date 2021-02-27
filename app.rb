@@ -11,8 +11,8 @@ def test_user()
 end
 
 def for_user()
-  if session[:username] != nil #check if session of user exist.
-    redirect('/')
+  if session[:username] == nil #check if session of user exist.
+    redirect('/login')
   end
 end
 ####Nästa grej
@@ -26,12 +26,10 @@ end
 
 #first page new users and users who have yet to log in will see
 get ('/') do
-  test_user()
   slim(:home)
 end
 
 get ('/game') do
-  test_user()
   for_user()
   slim(:game)
 end

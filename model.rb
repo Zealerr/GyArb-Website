@@ -62,10 +62,13 @@ end
 
 def get_stats()
   db = connect_to_db()
-  stats = db.execute("SELECT games, wins, From gameStats")
-  p stats
+  stats = db.execute("SELECT games, wins, username FROM gameStats INNER JOIN users ON users.id = gameStats.userId")
+  return stats
 end
 def get_user_stats(user_id)
+  db = connect_to_db
+  userStats = db.execute("SELECT username, games, wins, FROM users INNER JOIN gameStats ON gameStats.userId = ?", user_id)
+  p userStats
 end
 
 

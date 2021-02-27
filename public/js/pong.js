@@ -103,22 +103,42 @@ function drawBall(){
 }
 
 function drawBodies(){
-    if (playerPositionY < 0){
-        playerPositionY = 0
-        playerVelocityY = 0
+    if (gameOn == false){
+        if (playerPositionY < 0){
+            playerPositionY = 0
+            playerVelocityY = -playerVelocityY 
+        }
+        if (playerPositionY > 340){
+            playerPositionY = 340
+            playerVelocityY = -playerVelocityY 
+        }
+        if (CPUPositionY < 0){
+            CPUPositionY = 0
+            CPUVelocityY = -CPUVelocityY
+        }
+        if (CPUPositionY > 340){
+            CPUPositionY = 340
+            CPUVelocityY = -CPUVelocityY
+        }
     }
-    if (playerPositionY > 340){
-        playerPositionY = 340
-        playerVelocityY = 0
-    }
-    if (CPUPositionY < 0){
-        CPUPositionY = 0
-        CPUVelocityY = 0
-    }
-    if (CPUPositionY > 340){
-        CPUPositionY = 340
-        CPUVelocityY = 0
-    }
+    if (gameOn == true){
+        if (playerPositionY < 0){
+            playerPositionY = 0
+            playerVelocityY = 0
+        }
+        if (playerPositionY > 340){
+            playerPositionY = 340
+            playerVelocityY = 0
+        }
+        if (CPUPositionY < 0){
+            CPUPositionY = 0
+            CPUVelocityY = 0
+        }
+        if (CPUPositionY > 340){
+            CPUPositionY = 340
+            CPUVelocityY = 0
+        }
+    } 
     playerPositionY = playerPositionY + playerVelocityY;
     context.fillStyle = "white";
     context.fillRect(10, playerPositionY, 15, 60);
@@ -156,6 +176,7 @@ function newGame(){
     ballVelocityX = 0
     ballVelocityY = 0
     playerPositionY = 170
+    playerVelocityY = 0
     CPUPositionY = 170
     CPUVelocityY = 0
     if (playerPoints < 5 && CPUPoints < 5){

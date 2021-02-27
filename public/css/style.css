@@ -36,7 +36,7 @@ body {
   width: 100%;
   min-height: 100vh;
   display: grid;
-  grid-template-rows: var(--headerheight) auto 200px;
+  grid-template-rows: var(--headerheight) auto 150px;
   grid-template-columns: 1fr var(--pagewidth) 1fr;
   grid-template-areas: "not1 header not2" "not3 content not4" "not5 footer not6";
 }
@@ -125,14 +125,27 @@ nav {
 } */
 
 form {
-  width: 300px;
+  grid-row: content;
+  grid-column: content;
   padding: 40px;
   position: absolute;
-  top: 50%;
+  top: 40%;
   left: 50%;
   transform: translate(-50%, -70%);
-  background: grey;
+  background: var(--blue100);
   text-align: center;
+  border-radius: 10px;
+}
+
+form input {
+  margin-bottom: 10px;
+  border: none;
+  padding: 12px 20px;
+}
+
+form input[type=text], form input[type=password] {
+  background-color: var(--blue200);
+  border: 1px solid black;
 }
 
 
@@ -304,7 +317,6 @@ footer {
   display: flex;
   justify-content: space-between
 }
-
 
 .project_link, .copyright {
   height: 70px;

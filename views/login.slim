@@ -1,11 +1,10 @@
 form action="/users/login" method="post"
-  label for="username" Username 
+  .errormsg 
+    -if errormsg != nil 
+    p = "#{errormsg}"
+  input name="username" required="required" pattern="[0-9a-zA-Z]{3,16}" type="text" placeholder="Write username Here"/ 
   br
-  input name="username" type="text" placeholder="Write username Here"/ 
-  br
-  label for="password" Password
-  br
-  input name="password" type="password" placeholder="Write your password here"/  
+  input name="password" required="required" type="password" placeholder="Password"/  
   br
   input type="submit" value="Log In"/
   div.signup

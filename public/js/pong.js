@@ -29,27 +29,6 @@ var newRound = false
 var opponentWhen = 0
 var bodySpeed = 1.2
 
-startButton.addEventListener("click", startButtonPressed)
-
-function startButtonPressed(){
-    gameReady = true
-    opponentWhen = time + 3 + Math.round(Math.random() * 7)
-    startButton.innerHTML = "Searching for opponent..."
-    startButton.classList.toggle("startButtonClick")
-    startButton.removeEventListener("click", startButtonPressed)
-    document.getElementById("opponentName").innerHTML = "Searching for opponent..."
-}
-
-function startGame(){
-    gameReady = false
-    CPUID = CPUIDPool[Math.round(Math.random() * (CPUIDPool.length - 1))]
-    console.log(CPUIDPool.length);
-    CPUName = CPUNamePool[Math.round(Math.random() * (CPUNamePool.length - 1))]
-    document.getElementById("opponentName").innerHTML = "Opponent: " + CPUName
-    startButton.classList.toggle("startButtonGone")
-    newGame();
-    gameOn = true
-}
 
 function clearCanvas(){
     context.fillStyle = "rgba(0, 0, 0, 0.15)";
@@ -123,6 +102,52 @@ function drawBall(){
     context.fill();
 }
 
+function drawBodies(){
+    if (playerPositionY < 0){
+        playerPositionY = 0
+        playerVelocityY = 0
+    }
+    if (playerPositionY > 340){
+        playerPositionY = 340
+        playerVelocityY = 0
+    }
+    if (CPUPositionY < 0){
+        CPUPositionY = 0
+        CPUVelocityY = 0
+    }
+    if (CPUPositionY > 340){
+        CPUPositionY = 340
+        CPUVelocityY = 0
+    }
+    playerPositionY = playerPositionY + playerVelocityY;
+    context.fillStyle = "white";
+    context.fillRect(10, playerPositionY, 15, 60);
+    CPUPositionY = CPUPositionY + CPUVelocityY
+    context.fillStyle = "white";
+    context.fillRect(775, CPUPositionY, 15, 60);
+}
+
+startButton.addEventListener("click", startButtonPressed)
+
+function startButtonPressed(){
+    gameReady = true
+    opponentWhen = time + 3 + Math.round(Math.random() * 7)
+    startButton.innerHTML = "Searching for opponent..."
+    startButton.classList.toggle("startButtonClick")
+    startButton.removeEventListener("click", startButtonPressed)
+    document.getElementById("opponentName").innerHTML = "Searching for opponent..."
+}
+
+function startGame(){
+    gameReady = false
+    CPUID = "CPU1"//CPUIDPool[Math.round(Math.random() * (CPUIDPool.length - 1))]
+    CPUName = CPUNamePool[Math.round(Math.random() * (CPUNamePool.length - 1))]
+    document.getElementById("opponentName").innerHTML = "Opponent: " + CPUName
+    startButton.classList.toggle("startButtonGone")
+    newGame();
+    gameOn = true
+}
+
 function newGame(){
     playerTouch = false
     CPUTouch = false
@@ -132,6 +157,7 @@ function newGame(){
     ballVelocityY = 0
     playerPositionY = 170
     CPUPositionY = 170
+    CPUVelocityY = 0
     if (playerPoints < 5 && CPUPoints < 5){
         newRound = true
         timeMark = time
@@ -163,21 +189,6 @@ function newGameStart(){
             ballVelocityX = -1
         }
     }
-}
-
-function drawBodies(){
-    if (playerPositionY <= 0 || playerPositionY >= 340){
-        playerVelocityY = 0
-    }
-    if (CPUPositionY <= 0 || CPUPositionY >= 340){
-        CPUVelocityY = 0
-    }
-    playerPositionY = playerPositionY + playerVelocityY;
-    context.fillStyle = "white";
-    context.fillRect(10, playerPositionY, 15, 60);
-    CPUPositionY = CPUPositionY + CPUVelocityY
-    context.fillStyle = "white";
-    context.fillRect(775, CPUPositionY, 15, 60);
 }
 
 document.onkeydown = playerMove;
@@ -224,7 +235,7 @@ drawPoints();
 }
 
 function CPUPlay(){
-    if (gameOn == true){   
+    if (gameOn == true){     
         if (CPUID == "CPU1"){
             CPU1Play();
         }
@@ -239,20 +250,25 @@ function CPUPlay(){
 
 function CPU1Play(){
     if (ballVelocityX > 0){
-        if (CPUPositionY > ballPositionY + ballVelocityY * 20 ){
+        if (CPUPositionY + 20 > ballPositionY){
             CPUVelocityY = -bodySpeed
         }
-        if (CPUPositionY + 60 < ballPositionY - ballVelocityY * 20){
+        else if (CPUPositionY + 40 < ballPositionY){
             CPUVelocityY = bodySpeed
+        }
+        else{
+            CPUVelocityY = 0
         }
     }
     if (ballVelocityX < 0){
-        CPURand = Math.random()
-        if (CPURand > 0.95 && CPUPositionY < 150) {
+        if (CPUPositionY + 30 > 205){
+            CPUVelocityY = -bodySpeed
+        }
+        else if (CPUPositionY + 30 < 195){
             CPUVelocityY = bodySpeed
         }
-        if (CPURand > 0.95 && CPUPositionY > 190) {
-            CPUVelocityY = -bodySpeed
+        else{
+            CPUVelocityY = 0
         }
     } 
 }
@@ -315,6 +331,6 @@ function timer(){
 
 pingUpdate();
 setInterval(timer, 1000);
-setInterval(CPUPlay, 100);
+setInterval(CPUPlay, 20);
 setInterval(pingUpdate, 5000)
 var rendering = setInterval(render, 5);

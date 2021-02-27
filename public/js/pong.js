@@ -27,7 +27,7 @@ var timeMark = 0
 var gameReady = false
 var newRound = false
 var opponentWhen = 0
-var bodySpeed = 1.2
+var bodySpeed = 1.5
 
 
 function clearCanvas(){
@@ -282,10 +282,10 @@ function CPU1Play(){
         }
     }
     if (ballVelocityX < 0){
-        if (CPUPositionY + 30 > 205){
+        if (CPUPositionY + 30 > 200 + 10 * Math.abs(ballVelocityX)){
             CPUVelocityY = -bodySpeed
         }
-        else if (CPUPositionY + 30 < 195){
+        else if (CPUPositionY + 30 < 200 - 10 * Math.abs(ballVelocityX)){
             CPUVelocityY = bodySpeed
         }
         else{
@@ -352,6 +352,6 @@ function timer(){
 
 pingUpdate();
 setInterval(timer, 1000);
-setInterval(CPUPlay, 20);
+setInterval(CPUPlay, 40);
 setInterval(pingUpdate, 5000)
 var rendering = setInterval(render, 5);

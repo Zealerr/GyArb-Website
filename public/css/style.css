@@ -67,7 +67,6 @@ header {
 /* logo placement */
 
 .logo{
-  margin-left: 15px;
   height:45px;
 }
 
@@ -346,7 +345,19 @@ footer {
   align-items: center;
 }
 
+
 .copyright, .project_link a {
   margin-left: 30px;
+  margin-right: 30px;
   color: var(--blue500);  
+}
+
+
+@media screen and (max-width: 1250px) {
+  .pagewrapper {
+  grid-template-columns: 1fr auto 1fr;
+  }
+  header {
+    width: 100vw;
+  }
 }

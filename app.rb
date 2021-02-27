@@ -31,6 +31,7 @@ get ('/') do
 end
 
 get ('/game') do
+  test_user()
   for_user()
   slim(:game)
 end

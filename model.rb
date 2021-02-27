@@ -60,4 +60,13 @@ end
 def delete_user()
 end
 
+def get_stats()
+  db = connect_to_db()
+  stats = db.execute("SELECT games, wins, From gameStats")
+  p stats
+end
+def get_user_stats(user_id)
+end
+
+
 p "model.rb loaded"

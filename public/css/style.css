@@ -68,10 +68,11 @@ header {
 
 .logo{
   margin-left: 15px;
+  height:45px;
 }
 
 .logo img {
-  height: 40px;
+  height: 100%;
   color: white;
   font-family: Montserrat, sans-serif;
 }
@@ -134,7 +135,11 @@ form {
   border-radius: 10px;
 }
 .errormsg {
-  margin-bottom: 5px;
+  border: 3px solid rgb(195, 10, 41);
+  background-color: rgba(195, 10, 41, 0.652);
+  width: 235px;
+
+  margin-bottom: 10px;
 }
 .errormsg p{
   color: #ccc;

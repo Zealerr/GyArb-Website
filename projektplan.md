@@ -49,8 +49,9 @@ URL(routes) | HTTP Verb | Action | Förklaring
 
 - 
 
-## Göra idag
-- Fixa css på spelet
-- Fixa 
+## 7. Att göra
+- Lägga till undersöknings formulär sida som man skickas till efter varje match.
+- När man klickar på att spela match tar servern ett användarnamn från databasen och lägger i en session.
+- Fixa design på pong?
 
 

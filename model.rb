@@ -34,10 +34,8 @@ def register_user(username, password, confirm_password)
     redirect('/signup')
   end
 end
-def get_user()
-end
 def login_user(username, password)
-  db = db.connect_to_db()
+  db = connect_to_db()
 
   #check if username exists in database
   check = db.execute("SELECT EXISTS(SELECT * FROM users WHERE username=?)", username).first.first
@@ -56,8 +54,6 @@ def login_user(username, password)
     session[:errormsg] = "User does not exist or the password was wrong, please try again."
     redirect('/login')
   end
-end
-def delete_user()
 end
 
 def get_stats()

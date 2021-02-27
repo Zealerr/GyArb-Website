@@ -36,7 +36,14 @@ end
 
 #log in page
 get ('/login') do
-  slim(:login)
+  if session[:errormsg] != nil # if there is a errormsg
+    errormsg = session[:errormsg] # set locals variable to content of errormsg
+    session[:errormsg] = nil  # reset session
+  else  
+    errormsg = nil # if no session of errormsg exist, reset local variable 
+  end
+
+  slim(:login, locals:{errormsg: errormsg})
 end
 
 #sign up page

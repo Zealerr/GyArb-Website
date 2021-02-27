@@ -29,6 +29,7 @@ def register_user(username, password, confirm_password)
     db.execute('INSERT INTO users (username, pwdigest) VALUES (?,?)', username, password_digest)
     
     #Redirect to main
+    redirect('/')
   else #Passwords do not match
     session[:errormsg] = "Passwords do not match!"
     redirect('/signup')

@@ -1,13 +1,13 @@
 form action="/users/login" method="post"
-  .errormsg 
-    -if errormsg != nil 
-    p = "#{errormsg}"
+  -if errormsg != nil 
+    .errormsg 
+      p = "#{errormsg}"
   input name="username" required="required" pattern="[0-9a-zA-Z]{3,16}" type="text" placeholder="Write username Here"/ 
   br
   input name="password" required="required" type="password" placeholder="Password"/  
   br
-  input type="submit" value="Log In"/
-  div.signup
+  input class="gradientAnim" type="submit" value="Log In"/
+  div.link
     p Don't have an account? 
     a href="/signup" Sign up
 

@@ -11,8 +11,7 @@ html lang="en"
       div class="header-background gradientAnim "
       header 
         div class="logo"
-          h1
-            a href="/" KINGPONG ONLINE
+          img href="/img/kingpong_logo.png"
         nav
           ul class="menu"
             -if session[:user] == nil
@@ -37,3 +36,4 @@ html lang="en"
           .project_link 
             a href="" = "Our Github"
           .copyright   = "Copyright © 2021 Kingpong Online- All rights reserved"
+

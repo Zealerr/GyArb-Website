@@ -15,6 +15,16 @@ def for_user()
     redirect('/login')
   end
 end
+
+def get_errormsg()
+  if session[:errormsg] != nil # if there is a errormsg
+    errormsg = session[:errormsg] # set locals variable to content of errormsg
+    session[:errormsg] = nil  # reset session
+  else  
+    errormsg = nil # if no session of errormsg exist, reset local variable 
+  end
+  return errormsg
+end
 ####Nästa grej
 #fixa login session.
 #fixa med profil-sida.
@@ -36,19 +46,14 @@ end
 
 #log in page
 get ('/login') do
-  if session[:errormsg] != nil # if there is a errormsg
-    errormsg = session[:errormsg] # set locals variable to content of errormsg
-    session[:errormsg] = nil  # reset session
-  else  
-    errormsg = nil # if no session of errormsg exist, reset local variable 
-  end
-
+  errormsg = get_errormsg()
   slim(:login, locals:{errormsg: errormsg})
 end
 
 #sign up page
 get ('/signup') do
-  slim(:signup)
+  errormsg = get_errormsg()
+  slim(:signup, locals:{errormsg: errormsg})
 end
 
 #restores logged session to nil and redirects to homepage

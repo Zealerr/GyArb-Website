@@ -70,11 +70,8 @@ header {
   margin-left: 15px;
 }
 
-
-
-.logo h1 a {
-  line-height: 40px;
-  font-size: 30px;
+.logo img {
+  height: 40px;
   color: white;
   font-family: Montserrat, sans-serif;
 }
@@ -136,18 +133,38 @@ form {
   text-align: center;
   border-radius: 10px;
 }
+.errormsg {
+  margin-bottom: 5px;
+}
+.errormsg p{
+  color: #ccc;
+}
 
 form input {
-  margin-bottom: 10px;
+  margin-bottom: 15px;
   border: none;
   padding: 12px 20px;
 }
 
 form input[type=text], form input[type=password] {
   background-color: var(--blue200);
-  border: 1px solid black;
+  color: #ccc;
 }
 
+form input[type=submit] {
+  cursor: pointer;
+  margin-top: 10px;
+  color: white;
+  border-radius: 5px;
+  box-shadow: 0px 3px 7px 0px black;
+}
+
+.link p {
+  color: #ccc;
+}
+.link a {
+  color: var(--blue500);
+}
 
 .loading {
   margin: 0 auto;

@@ -1,5 +1,5 @@
 def connect_to_db()
-  db = SQLite3::Database.new('db/blog.db')
+  db = SQLite3::Database.new('db/score.db')
   db.results_as_hash = true
   return db
 end
@@ -37,7 +37,7 @@ end
 def get_user()
 end
 def login_user(username, password)
-  db.connect_to_db()
+  db = db.connect_to_db()
 
   #check if username exists in database
   check = db.execute("SELECT EXISTS(SELECT * FROM users WHERE username=?)", username).first.first

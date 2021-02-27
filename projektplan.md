@@ -41,6 +41,16 @@ URL(routes) | HTTP Verb | Action | Förklaring
   >Might be figured out if repetitive
   >Solve by not queueing against the same AI ID several times?
 
+- Ser inte spel när man säker efter motståndare
 
+- CSS 
+
+- Lägg till post game screen
+
+- 
+
+## Göra idag
+- Fixa css på spelet
+- Fixa 
 
 

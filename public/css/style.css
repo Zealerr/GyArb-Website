@@ -13,12 +13,20 @@ body, body * {
 body {
   width: 100%;
   height: 100%; /* just to fill upp site, may be temporary */
+  background-color: var(--blue200);
 }
 
 /* css variables */
 
 :root{
-  --headerclr: #2c3e50;
+  --font: "Source Sans Pro", Arial,"Helvetica Neue",Helvetica,sans-serif;
+  --headerclr: #383b3f;
+  --headerheight: 50px;
+  --pagewidth: 1250px;
+  --blue200: #0b1725;
+  --blue100: #09121d;
+  --blue600: #5f93d0;
+  --blue500: #346daf;
 }
 
 /* whole page grid - general template*/
@@ -28,36 +36,60 @@ body {
   width: 100%;
   min-height: 100vh;
   display: grid;
-  grid-template-rows: calc(3px + var(--headerheight)) auto 200px;
+  grid-template-rows: var(--headerheight) auto 200px;
   grid-template-columns: 1fr var(--pagewidth) 1fr;
   grid-template-areas: "not1 header not2" "not3 content not4" "not5 footer not6";
 }
 
 /* head bar, with navigation (links) */
 
-header {
+.headerBorder {
   grid-row: header;
   grid-column-start: not1;
   grid-column-end: not2;
   width: 100%;
-  height: 60px;
-  float: left;
-  position: relative;
-  background-color: var(--headerclr);
+  height: 3px;
+}
+
+.header {
+  width: 100%;
+  background-color: var(--blue100);
+  grid-row: header;
+  grid-column-start: not1;
+  grid-column-end: not2;
+  box-shadow: 0px 3px 7px 0px black;
+}
+
+header {
+  width: var(--pagewidth);
+  grid-row: header;
+  grid-column: header;
+  height: var(--headerheight);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
 /* logo placement */
 
 .logo{
-  position: relative;
-  top: 50%;
+  margin-left: 15px;
+}
+
+
+
+.logo h1 a {
+  line-height: 40px;
+  font-size: 30px;
+  color: white;
+  font-family: var(--font);
 }
 
 /* nav. menu */
 
 nav {
-  padding: 0;
-  float: right;
+  top: 0px;
+  height: 50px;
 }
 
 /* navigation menu */
@@ -67,17 +99,33 @@ nav {
   margin: 0;
   padding: 0;
   list-style: none;
+  height: inherit;
+
+  display: flex;
+  align-items: center;
 }
 
 /* menu items */
-
 .menu li {
-  display:inline-block;
-  position: relative;
+  display: inline-block;
+  
 }
+
+.menu li a {
+  padding: 15px 10px;
+  color: white;
+  font-size: 18px;
+}
+
+.menu li a:hover {
+  background-color: var(--blue200);
+}
+
 .menubtn {
   padding: 0.8em;
+  font-family: var(--font);
   font-size: 13px;
+  font-weight: 500;
   border: 1px solid;
   border-radius: 5px;
 }
@@ -94,14 +142,58 @@ form {
 }
 
 
-.gradientAnim {
-  background: linear-gradient(270deg, #f39c12, #8e44ad, #f39c12, #8e44ad);
-  background-size: 800% 800%;
+.loading {
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #d1dae3;
+}
+.loading .text {
+  color: transparent;
+  display: inline-block;
+  border-radius: 3px;
+  background-color: #1d3557;
+  position: relative;
+  -webkit-background-clip: text;
+  background-clip: text;
+}
 
-  -webkit-animation: GradientAnimation 00s ease infinite;
-  -moz-animation: GradientAnimation 00s ease infinite;
-  -o-animation: GradientAnimation 00s ease infinite;
-  animation: GradientAnimation 60s ease infinite;
+.loading .text:before {
+  content: attr(data-title);
+  background: linear-gradient(90deg, #4e17bb 0%, #d48e1d 51, #c30a28 100%);
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  background-clip: text;
+  -webkit-background-clip: text;
+  transition: all 1s ease-in-out;
+  animation: text-animation 3s infinite;
+}
+
+@keyframes text-animation {
+  0% {
+    width: 0;
+  }
+  50% {
+    width: 100%;
+  }
+  100% {
+    width: 0;
+  }
+}
+
+.gradientAnim {
+  background: linear-gradient(270deg,  #4e17bb, #d18c1c, #c30a28);
+  background-size: 1000% 1000%;
+
+  -webkit-animation: GradientAnimation 40s ease infinite;
+  -moz-animation: GradientAnimation 40s ease infinite;
+  -o-animation: GradientAnimation 40s ease infinite;
+  animation: GradientAnimation 40s ease infinite;
 }
 
 @-webkit-keyframes GradientAnimation {
@@ -127,14 +219,21 @@ form {
 
 
 .gameContent {
+  grid-row: content;
+  grid-column: content;
   background-color: lightgray;
-  width: 1400px;
+  width: 100%;
+  position: relative;
+  margin-top: 30px;
 }
 
 .pingpong{
-  margin: 80px 0 0 299px;
+  position: relative;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   border: 1px solid black;
-  
+
 }
 
 .gameInfo{
@@ -163,9 +262,10 @@ form {
   text-align: center;
   font-family: Arial, Helvetica, sans-serif;
   font-weight: bold;
-  position: relative;
-  top: -250px;
-  left: 625px;  
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   -webkit-user-select: none;
   -ms-user-select: none; 
   user-select: none; 

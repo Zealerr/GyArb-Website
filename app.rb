@@ -11,7 +11,7 @@ def test_user()
 end
 
 def for_user()
-  if session[:username] == nil #check if session of user exist.
+  if session[:user] == nil #check if session of user exist.
     redirect('/login')
   end
 end

@@ -4,9 +4,9 @@ form class="signupForm" action="/users/signup" method="post"
       p = "#{errormsg}"
   input class="username" name="username" type="text" placeholder="Username" pattern="[0-9a-zA-Z]{3,16}" title="Username must be between 3 and 16 characters, and only include letters or numbers as well as at least one capitalized letter.  " required="required"/
   br
-  input class="password" name="password" type="password" placeholder="Password" pattern="[0-9a-zA-Z]{8,24}" title="Username must be 8 and 24 characters, and only include letters or numbers as well as at least one capitalized letter.  " required="required"/
+  input class="password" name="password" type="password" placeholder="Password" pattern="[0-9a-zA-Z]{8,24}" title="Password must be between 8 and 24 characters, and only include letters or numbers as well as at least one capitalized letter.  " required="required"/
   br
-  input class="confirm_pass" name="confirm_password" type="password" placeholder="Confirm your password" pattern="[0-9a-zA-Z]{8,24}" title="Username must be 8 and 24 characters, and only include letters or numbers as well as at least one capitalized letter." required="required"/
+  input class="confirm_pass" name="confirm_password" type="password" placeholder="Confirm your password" pattern="[0-9a-zA-Z]{8,24}" title="Password must be between 8 and 24 characters, and only include letters or numbers as well as at least one capitalized letter." required="required"/
   br
   input class="gradientAnim" name="signup" type="submit" value="Submit"/
   div.link

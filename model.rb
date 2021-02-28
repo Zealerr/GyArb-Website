@@ -38,8 +38,9 @@ end
 def login_user(username, password)
   db = connect_to_db()
   #check if username exists in database
-  check = db.execute("SELECT EXISTS(SELECT * FROM users WHERE username=?)", username).first.first[1]
-  if check == 1
+  check = db.execute("SELECT * FROM users WHERE username=?", username).first
+  p check
+  if check != nil
     result = db.execute("SELECT * FROM users WHERE username = ?", username).first
     db_pwdigest = result["pwdigest"]
     id = result["id"]

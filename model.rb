@@ -37,7 +37,6 @@ def register_user(username, password, confirm_password)
 end
 def login_user(username, password)
   db = connect_to_db()
-
   #check if username exists in database
   check = db.execute("SELECT EXISTS(SELECT * FROM users WHERE username=?)", username).first.first[1]
   if check == 1
@@ -46,7 +45,7 @@ def login_user(username, password)
     id = result["id"]
     if BCrypt::Password.new(db_pwdigest) == password #Check if password is right
       session[:user] = User.new(username, id)
-      redirect('/home')
+      redirect('/')
     else #Password was wrong
       session[:errormsg] = "User does not exist or the password was wrong, please try again."
       redirect('/login')

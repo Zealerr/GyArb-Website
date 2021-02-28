@@ -1,6 +1,6 @@
 main class="user-content"
   article class="user-info"
-    - userStats = get_user_stats(session[:user][:userId])
+    - userStats = get_user_stats(session[:user].userId)
     table 
       tr 
         th = "Username"
@@ -11,3 +11,5 @@ main class="user-content"
         / td = "#{userStats[:username]}"
   / article class="leaderboards"
   /   - stats = get_stats()
+
+  

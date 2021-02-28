@@ -25,9 +25,12 @@ def register_user(username, password, confirm_password)
     db = connect_to_db()
     # encrypt password
     password_digest = BCrypt::Password.create(password)
-    
+    # create new user in database
     db.execute('INSERT INTO users (username, pwdigest) VALUES (?,?)', username, password_digest)
-    
+    # get new users info
+    user = db.execute("SELECT * FROM users WHERE username=?", username).first
+    # create new stats connected to new user
+    new_stats(user["id"])
     #Redirect to main
     redirect('/')
   else #Passwords do not match
@@ -39,7 +42,6 @@ def login_user(username, password)
   db = connect_to_db()
   #check if username exists in database
   check = db.execute("SELECT * FROM users WHERE username=?", username).first
-  p check
   if check != nil
     result = db.execute("SELECT * FROM users WHERE username = ?", username).first
     db_pwdigest = result["pwdigest"]
@@ -57,6 +59,10 @@ def login_user(username, password)
   end
 end
 
+def new_stats(userId)
+  db = connect_to_db()
+  db.execute("INSERT INTO gameStats (games, wins, winstreak, userId) VALUES (0,0,0,?)", userId)
+end
 def get_stats()
   db = connect_to_db()
   stats = db.execute("SELECT games, wins, username FROM gameStats INNER JOIN users ON users.id = gameStats.userId")

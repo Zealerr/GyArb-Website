@@ -28,6 +28,7 @@ var gameReady = false
 var newRound = false
 var opponentWhen = 0
 var bodySpeed = 1.5
+var CPUHitRandom1 = 0
 
 
 function clearCanvas(){
@@ -54,7 +55,7 @@ function drawBall(){
     if (ballPositionY >= playerPositionY - 2 && ballPositionY <= playerPositionY + 62){
         if (ballPositionX <= 32 && playerTouch == false){
         ballVelocityX = ballVelocityX * -1.1    
-        ballVelocityY = 0.05 *(ballPositionY - (playerPositionY + 30))
+        ballVelocityY = 0.04 *(ballPositionY - (playerPositionY + 30)) * Math.abs(ballVelocityX)
         playerTouch = true
         CPUTouch = false
         }
@@ -62,9 +63,11 @@ function drawBall(){
     if (ballPositionY >= CPUPositionY - 2 && ballPositionY <= CPUPositionY + 62){
         if (ballPositionX >= 768 && CPUTouch == false){
         ballVelocityX = ballVelocityX * -1.1    
-        ballVelocityY = 0.05 *(ballPositionY - (CPUPositionY + 30))
+        ballVelocityY = 0.04 *(ballPositionY - (CPUPositionY + 30)) * Math.abs(ballVelocityX)
         playerTouch = false
         CPUTouch = true
+        CPUHitRandom1 = Math.random()
+        CPUHitRandom2 = Math.random()
         }
     }
     if (ballVelocityX > 2 || ballVelocityX < -2){
@@ -160,7 +163,7 @@ function startButtonPressed(){
 
 function startGame(){
     gameReady = false
-    CPUID = "CPU1"//CPUIDPool[Math.round(Math.random() * (CPUIDPool.length - 1))]
+    CPUID = "CPU2"//CPUIDPool[Math.round(Math.random() * (CPUIDPool.length - 1))]
     CPUName = CPUNamePool[Math.round(Math.random() * (CPUNamePool.length - 1))]
     document.getElementById("opponentName").innerHTML = "Opponent: " + CPUName
     startButton.classList.toggle("startButtonGone")
@@ -198,6 +201,7 @@ function newGame(){
 
 function newGameStart(){
     newRound = false
+    ballVelocityY = Math.round((Math.random() * 4) - 2) / 4
     if (playerPoints < CPUPoints){
         ballVelocityX = -1
     }
@@ -295,7 +299,7 @@ function CPU1Play(){
 }
 
 function CPU2Play(){
-    if (ballVelocityX > 0 && calcDone == false){
+    if (ballVelocityX > 0 && calcDone == false && ballPositionX > 150 + Math.random()*100){
         ballHitY = ballPositionY + ((800 - ballPositionX)/ballVelocityX) * ballVelocityY
         if (ballHitY > 400){
             ballHitY = 800 - ballHitY
@@ -303,26 +307,37 @@ function CPU2Play(){
         if (ballHitY < 0){
             ballHitY =  ballHitY * -1
         }
+        if (CPUHitRandom1 * ballVelocityX > 1.4 && Math.abs(ballVelocityY) > 0.5){
+            ballHitY = ballHitY + CPUHitRandom2 * 30 - 15
+        }
+        if (CPUHitRandom1 * ballVelocityX > 1.75 && Math.abs(ballVelocityY) > 0.5){
+            ballHitY = ballHitY + CPUHitRandom2 * 50 - 25
+        }
         calcDone = true
     }
     if (ballPositionY < 8 || ballPositionY > 392 || ballPositionX < 500){
         calcDone = false
     }
     if (ballVelocityX > 0){
-        if (CPUPositionY + 10 > ballHitY + (800 - ballPositionX)/5){
+        if (CPUPositionY + 10 > ballHitY){
             CPUVelocityY = -bodySpeed
         }
-        if (CPUPositionY + 50 < ballHitY - (770 - ballPositionX)/5){
+        else if (CPUPositionY + 50 < ballHitY){
             CPUVelocityY = bodySpeed
         }
+        else{
+            CPUVelocityY = 0
+        } 
     }
-    if (ballVelocityX < 0){
-        CPURand = Math.random()
-        if (CPURand > 0.95 && CPUPositionY < 150) {
+    if (ballVelocityX < 0 && ballPositionX < 600 + 150 * Math.random()){
+        if (CPUPositionY + 30 > 200 && CPUPositionY + 30 > 220){
+            CPUVelocityY = -bodySpeed
+        }
+        else if (CPUPositionY + 30 < 200 && CPUPositionY + 30 < 180){
             CPUVelocityY = bodySpeed
         }
-        if (CPURand > 0.95 && CPUPositionY > 190) {
-            CPUVelocityY = -bodySpeed
+        else{
+            CPUVelocityY = 0
         }
     }
 }
@@ -352,6 +367,6 @@ function timer(){
 
 pingUpdate();
 setInterval(timer, 1000);
-setInterval(CPUPlay, 40);
+setInterval(CPUPlay, 60);
 setInterval(pingUpdate, 5000)
 var rendering = setInterval(render, 5);

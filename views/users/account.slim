@@ -1,15 +1,20 @@
 main class="user-content"
   article class="user-info"
-    - userStats = get_user_stats(session[:user].userId)
+    - userStats = session[:user].stats()
     table 
       tr 
         th = "Username"
-        th = "Wins"
         th = "Games"
+        th = "Wins"
+        th = "Winstreak"
         th = "Win %"
       tr
-        / td = "#{userStats[:username]}"
+        td = "#{session[:user].username}"
+        td = "#{userStats["games"]}"
+        td = "#{userStats["wins"]}"
+        td = "#{userStats["winStreak"]}"
+        - winPercentage = (userStats["wins"].to_f / userStats["games"].to_f * 100).to_i
+        td = "#{winPercentage}%"
   / article class="leaderboards"
   /   - stats = get_stats()
 
-  

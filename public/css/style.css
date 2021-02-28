@@ -5,7 +5,7 @@ body, body * {
   box-sizing: unset;
   padding: 0;
   font-size: unset;
-  color: black;
+  color: #ccc;
   text-decoration: unset;
 }
 

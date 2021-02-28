@@ -13,10 +13,19 @@ class User
   end
 
   def stats()
-    db = connect_to_db()
-    return db.execute("SELECT * FROM pongWins WHERE userId=?", @userId)
+    db = connect_to_db
+    stats = db.execute("SELECT games, wins, winStreak FROM gameStats WHERE userId=?", @userId).first
+    return stats
   end
 
+  def add_game(matchIsWin)
+    db = connect_to_db
+    if matchIsWin
+      db.execute("UPDATE gameStats SET games = games + 1 AND wins = wins + 1 AND winStreak = winStreak + 1 WHERE userId=?", @userId)
+    else
+      db.execute("UPDATE gameSTATS SET games = games + 1 AND winStreak = 0 WHERE userId=?", @userId)
+    end
+  end
 end
 
 # user crud
@@ -68,11 +77,6 @@ def get_stats()
   stats = db.execute("SELECT games, wins, username FROM gameStats INNER JOIN users ON users.id = gameStats.userId")
   return stats
 end
-def get_user_stats(user_id)
-  db = connect_to_db
-  userStats = db.execute("SELECT username, games, wins, FROM users INNER JOIN gameStats ON gameStats.userId = ?", user_id)
-  p userStats
-end
 
 
-p "model.rb loaded"
+puts "model.rb loaded"

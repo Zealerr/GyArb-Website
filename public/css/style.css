@@ -303,6 +303,7 @@ form input[type=submit] {
   position: relative;
   left: 50%;
   top: -12%;
+  z-index: 2;
   transform:translate(-50%);
   -webkit-user-select: none;
   -ms-user-select: none; 

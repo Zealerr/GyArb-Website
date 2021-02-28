@@ -308,10 +308,10 @@ function CPU2Play(){
             ballHitY =  ballHitY * -1
         }
         if (CPUHitRandom1 * ballVelocityX > 1.4 && Math.abs(ballVelocityY) > 0.5){
-            ballHitY = ballHitY + CPUHitRandom2 * 30 - 15
+            ballHitY = (3 * ballHitY + CPUPositionY) / 4 + CPUHitRandom2 * 40 - 20
         }
         if (CPUHitRandom1 * ballVelocityX > 1.75 && Math.abs(ballVelocityY) > 0.5){
-            ballHitY = ballHitY + CPUHitRandom2 * 50 - 25
+            ballHitY = ballHitY + CPUHitRandom2 * 60 - 30
         }
         calcDone = true
     }
@@ -329,7 +329,7 @@ function CPU2Play(){
             CPUVelocityY = 0
         } 
     }
-    if (ballVelocityX < 0 && ballPositionX < 600 + 150 * Math.random()){
+    if (ballVelocityX < 0 && ballPositionX < 500 + 250 * CPUHitRandom1){
         if (CPUPositionY + 30 > 200 && CPUPositionY + 30 > 220){
             CPUVelocityY = -bodySpeed
         }

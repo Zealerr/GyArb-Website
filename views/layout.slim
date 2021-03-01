@@ -30,7 +30,29 @@ html lang="en"
                       <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
                       <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"/>
                     </svg>
-      == yield
+      .content
+        .content-left
+          == yield
+        div class="content-right"
+          article class="leaderboards"
+            - stats = get_leaderboard()
+            - p stats
+            table class="title-row"
+              tr class="gradientAnim"
+                td class="leaderboard-title" = "TOP 15"
+                td class="wins-title" = "WINS"
+                td class="win-percentage-title" = "WIN%"
+            table
+              - stats.each_with_index do |statistic, index|
+                - if index < 15
+                  tr
+                    td class="placement" = "#{index + 1}."
+                    -if session[:user] != nil && statistic["username"] == session[:user].username
+                      td class="username" = "#{statistic["username"]}" 
+                    -else
+                      td class="name" = "#{statistic["username"]}"
+                    td class="wins" = "#{statistic["wins"]}"
+                    td class="win-percentage" = "#{statistic["winPercentage"]}%"
       footer  
         div class="footerBorder gradientAnim"
         .footerContent

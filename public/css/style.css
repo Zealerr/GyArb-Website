@@ -21,7 +21,7 @@ body {
 :root{
   --font: "Source Sans Pro", Arial,"Helvetica Neue",Helvetica,sans-serif;
   --headerclr: #383b3f;
-  --headerheight: 50px;
+  --headerheight: 60px;
   --pagewidth: 1250px;
   --blue100: #09121d;
   --blue200: #0b1725;
@@ -37,7 +37,7 @@ body {
   width: 100%;
   min-height: 100vh;
   display: grid;
-  grid-template-rows: var(--headerheight) auto 150px;
+  grid-template-rows: var(--headerheight) auto 100px;
   grid-template-columns: 1fr var(--pagewidth) 1fr;
   grid-template-areas: "not1 header not2" "not3 content not4" "not5 footer not6";
 }
@@ -104,9 +104,9 @@ nav {
 }
 
 .menu li a {
-  padding: 15px 10px;
+  padding: 20px 10px;
   color: white;
-  font-size: 18px;
+  font-size: 20px;
 }
 
 .menu li a:hover {
@@ -125,11 +125,11 @@ nav {
 form {
   grid-row: content;
   grid-column: content;
-  padding: 40px;
-  position: absolute;
-  top: 40%;
+  position: relative;
   left: 50%;
-  transform: translate(-50%, -70%);
+  transform: translateX(-50%);
+  padding: 40px;
+  max-width: 300px;
   background: var(--blue100);
   text-align: center;
   border-radius: 10px;
@@ -151,8 +151,8 @@ form input {
   padding: 12px 20px;
 }
 
-form input[type=text], form input[type=password] {
-  background-color: var(--blue200);
+form input[type=text], form input[type=password], form input::placeholder {
+  background-color: var(--blue300);
   color: #ccc;
 }
 
@@ -248,17 +248,14 @@ form input[type=submit] {
 
 
 .gameContent {
-  grid-row: content;
-  grid-column: content;
-  background-color: lightgray;
-  width: 100%;
-  position: relative;
-  margin-top: 30px;
+  background-color: var(--blue200);
+  margin-right: 20px;
+  height: 600px;
 }
 
 .pingpong{
   position: relative;
-  top: 50%;
+  top: 30px;
   left: 50%;
   transform: translate(-50%, -50%);
   border: 1px solid black;
@@ -268,32 +265,32 @@ form input[type=submit] {
 .gameInfo{
   width: 800px;
   display: grid;
-  grid-template-columns: 710px 90px;
+  grid-template-columns: 100px 700px;
   position: relative;
-  top: 50px;
+  top: 30px;
   left: 50%;
   transform: translate(-50%);
 }
 
 .opponentName{
-  width: 710px;;
+  width: 700px;
+  justify-content: right;
+  text-align: right;
 }
 
 .pingMS{
-  width: 90px;
-  justify-content: right;
+  width: 100px;
 }
 
 .pingpong{
   border: 1px solid black;
   position: relative;
-  top: 50px; 
+  top: 30px; 
   left: 50%;
   transform: translate(-50%);
 }
 
-.startButton{
-  background-color: white;
+.startbutton{
   width: 150px;
   height: 40px;
   vertical-align: middle;
@@ -303,12 +300,27 @@ form input[type=submit] {
   font-weight: bold;
   position: relative;
   left: 50%;
-  top: -12%;
   z-index: 2;
-  transform:translate(-50%);
+  transform: translateX(-50%);
   -webkit-user-select: none;
   -ms-user-select: none; 
   user-select: none; 
+}
+
+.startButton {
+  cursor: pointer;
+  width: 200px;
+  height: 40px;
+  vertical-align: middle;
+  line-height: 40px;
+  text-align: center;
+  font-family: Montserrat, sans-serif;
+  font-weight: 700;
+  margin-top: 40px;
+  position: relative;
+  left: 50%;
+  transform: translateX(-50%);
+  margin-bottom: 30px;
 }
 
 .startButtonClick{
@@ -354,7 +366,89 @@ footer {
   color: var(--blue500);  
 }
 
+.content {
+  margin: 40px 0px;
+  grid-column: content;
+  grid-row: content;
+  display: grid;
+  grid-template-columns: auto 370px;
+  grid-template-areas: "left right";
+}
+.content-right {
+  grid-column: right;
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+.content-left {
+  grid-column: left;
+  padding-right: 30px;
+  width: 100%;
+}
+.account-stats{
+  margin-right: 20px;
+}
 
+/* leaderboard styling */
+.leaderboards, .account-stats {
+  padding: 20px;
+  background-color: var(--blue200);
+}
+.leaderboards table {
+  border-spacing: 0;
+  border: none;
+}
+.leaderboards table *{
+  color: var(--blue500);
+}
+.leaderboards table tr {
+  height: 40px;
+}
+.title-row {
+  margin-bottom: 10px;
+  width: 330px;
+}
+.leaderboards table:nth-child(2) tr:nth-child(odd) {
+  background-color: var(--blue300);
+}
+.leaderboard-title {
+  color: white !important;
+  padding-left: 10px;
+  width: 200px;
+}
+.wins-title {
+  color: white !important;
+}
+.win-percentage-title {
+  padding-left: 10px;
+  padding-right: 10px;
+  color: white !important;
+}
+.placement {
+  width: 20px;
+  padding-left: 10px;
+}
+.name {
+  width: 170px;
+  padding-left: 10px;
+  color: white !important;
+}
+.username {
+  width: 170px;
+  padding-left: 10px;
+  color: rgb(255, 251, 124) !important;
+}
+.wins, .wins-title {
+  padding-left: 10px;
+  width: 40px;
+}
+.win-percentage {
+  width: 50px;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+/* styling of screens smaller than 1250px */
 @media screen and (max-width: 1250px) {
   .pagewrapper {
   grid-template-columns: 1fr auto 1fr;

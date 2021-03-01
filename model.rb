@@ -14,17 +14,27 @@ class User
 
   def stats()
     db = connect_to_db
-    stats = db.execute("SELECT games, wins, winStreak FROM gameStats WHERE userId=?", @userId).first
+    stats = db.execute("SELECT games, wins, winStreak, winPercentage FROM gameStats WHERE userId=?", @userId).first
     return stats
   end
 
   def add_game(matchIsWin)
     db = connect_to_db
     if matchIsWin
-      db.execute("UPDATE gameStats SET games = games + 1 AND wins = wins + 1 AND winStreak = winStreak + 1 WHERE userId=?", @userId)
+      db.execute("UPDATE gameStats SET games = games +1,wins = (wins + 1), winStreak = winStreak + 1 WHERE userId=?", @userId)
     else
-      db.execute("UPDATE gameSTATS SET games = games + 1 AND winStreak = 0 WHERE userId=?", @userId)
+      db.execute("UPDATE gameStats SET games = games +1, winStreak = 0 WHERE userId=?", @userId)
     end
+    userStats = stats()
+    games = userStats["games"]
+    wins = userStats["wins"]
+    if games != 0 #if games played then we can not divide games
+      winPercentage = (wins.to_f / games.to_f * 100).round
+    else
+      winPercentage = 0
+    end
+    # update winPercentage
+    db.execute("UPDATE gameStats SET winPercentage = ? WHERE userId=?", winPercentage, @userId)
   end
 end
 
@@ -70,13 +80,16 @@ end
 
 def new_stats(userId)
   db = connect_to_db()
-  db.execute("INSERT INTO gameStats (games, wins, winstreak, userId) VALUES (0,0,0,?)", userId)
+  db.execute("INSERT INTO gameStats (games, wins, winstreak, winPercentage, userId) VALUES (0,0,0,0,?)", userId)
 end
 def get_stats()
   db = connect_to_db()
-  stats = db.execute("SELECT games, wins, username FROM gameStats INNER JOIN users ON users.id = gameStats.userId")
+  stats = db.execute("SELECT games, wins, winStreak, winPercentage, username FROM gameStats INNER JOIN users ON users.id = gameStats.userId")
   return stats
 end
-
+def get_leaderboard()
+  db = connect_to_db()
+  stats = db.execute("SELECT wins, winPercentage, username FROM gameStats INNER JOIN users ON users.id = gameStats.userId ORDER BY wins DESC, winPercentage DESC")
+end
 
 puts "model.rb loaded"

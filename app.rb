@@ -63,14 +63,9 @@ get ('/logout') do
 end
 
 #account info site
-get ('/user/account') do
+get ('/users/account') do
   for_user
   slim(:"users/account")
-end
-
-get ('/user/stats') do
-  for_user
-  slim(:"users/stats")
 end
 
 #take username and password from user who is trying to log in and check

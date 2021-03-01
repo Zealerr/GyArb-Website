@@ -1,23 +1,7 @@
-main class="user-content"
-  article class="user-info"
-    - userStats = session[:user].stats()
-    table 
-      tr 
-        th = "Username"
-        th = "Games"
-        th = "Wins"
-        th = "Winstreak"
-        th = "Win %"
-      tr
-        td = "#{session[:user].username}"
-        td = "#{userStats["games"]}"
-        td = "#{userStats["wins"]}"
-        td = "#{userStats["winStreak"]}"
-        - if userStats["games"] != 0
-          - winPercentage = (userStats["wins"].to_f / userStats["games"].to_f * 100).to_i
-        - else
-          - winPercentage = 0
-        td = "#{winPercentage}%"
-  / article class="leaderboards"
-  /   - stats = get_stats()
-
+article class="account-stats"
+  / show username in big text
+  - username = session[:user].username
+  h2 = "#{username}"
+  / show games, wins, winStreak, winPercentage
+  - stats = session[:user].stats
+        

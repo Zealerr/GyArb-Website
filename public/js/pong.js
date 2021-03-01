@@ -28,7 +28,11 @@ var gameReady = false
 var newRound = false
 var opponentWhen = 0
 var bodySpeed = 1.5
-var CPUHitRandom1 = 0
+var CPUHitRandom1 = Math.random()
+var CPUHitRandom2 = Math.random()
+var duration = 0
+var durationSet = false
+var shakeStill = 0
 
 
 function clearCanvas(){
@@ -182,6 +186,8 @@ function newGame(){
     playerVelocityY = 0
     CPUPositionY = 170
     CPUVelocityY = 0
+    duration = 1
+    durationSet = false
     if (playerPoints < 5 && CPUPoints < 5){
         newRound = true
         timeMark = time
@@ -307,11 +313,11 @@ function CPU2Play(){
         if (ballHitY < 0){
             ballHitY =  ballHitY * -1
         }
-        if (CPUHitRandom1 * ballVelocityX > 1.4 && Math.abs(ballVelocityY) > 0.5){
-            ballHitY = (3 * ballHitY + CPUPositionY) / 4 + CPUHitRandom2 * 40 - 20
-        }
         if (CPUHitRandom1 * ballVelocityX > 1.75 && Math.abs(ballVelocityY) > 0.5){
             ballHitY = ballHitY + CPUHitRandom2 * 60 - 30
+        }
+        else if (CPUHitRandom1 * ballVelocityX > 1.5 && Math.abs(ballVelocityY) > 0.5){
+            ballHitY = (4 * ballHitY + CPUPositionY) / 5 + CPUHitRandom2 * 30 - 15
         }
         calcDone = true
     }
@@ -340,6 +346,49 @@ function CPU2Play(){
             CPUVelocityY = 0
         }
     }
+    if (ballVelocityX == 0){
+        if (CPUHitRandom1 > 0.8 && time - timeMark > Math.random() / 2 + 0.25 && duration > 0){
+            if (durationSet == false){
+                duration = 30 + Math.round(Math.random() * 5)
+                durationSet = true
+            }
+            duration = duration - 1
+            console.log(duration)
+
+            if (CPUVelocityY >= 0){
+                if (duration % 5 == 0){
+                    if (CPUVelocityY > 0 || shakeStill == 1 || shakeStill == 2 || shakeStill == 3){
+                        CPUVelocityY = 0
+                        if (Math.random() > 0.15){
+                        shakeStill = shakeStill - 1
+                        duration = duration + 1
+                        }
+                    }
+                    else{
+                    CPUVelocityY = -bodySpeed
+                    shakeStill = 3
+                    console.log("up")
+                    }
+                }
+            }
+            if (CPUVelocityY <= 0){
+                if ((duration - 3) % 5 == 0){
+                    if (CPUVelocityY < 0 || shakeStill == 1 || shakeStill == 2 || shakeStill == 3){
+                        CPUVelocityY = 0
+                        if (Math.random() > 0.15){
+                            shakeStill = shakeStill - 1
+                            duration = duration + 1
+                        }
+                    }
+                    else{
+                    CPUVelocityY = bodySpeed
+                    console.log("down")
+                    shakeStill = 3
+                    }
+                }
+            }
+        }
+    }
 }
 
 function CPU3Play(){
@@ -350,6 +399,8 @@ function CPU3Play(){
         CPUVelocityY = bodySpeed
     }
 }
+
+
 
 function pingUpdate(){
     document.getElementById("pingMS").innerHTML = "Ping is " + String(12 + Math.round(Math.random() * 3)) + " ms"

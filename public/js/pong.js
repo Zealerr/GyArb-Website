@@ -36,7 +36,7 @@ var shakeStill = 0
 
 
 function clearCanvas(){
-    context.fillStyle = "rgba(0, 0, 0, 0.15)";
+    context.fillStyle = "rgba(0, 0, 0, 0.25)";
     context.fillRect(0, 0, 800, 400)
 }
 
@@ -58,20 +58,30 @@ function drawBall(){
     }
     if (ballPositionY >= playerPositionY - 2 && ballPositionY <= playerPositionY + 62){
         if (ballPositionX <= 32 && playerTouch == false){
-        ballVelocityX = ballVelocityX * -1.1    
-        ballVelocityY = 0.04 *(ballPositionY - (playerPositionY + 30)) * Math.abs(ballVelocityX)
-        playerTouch = true
-        CPUTouch = false
+            if (ballVelocityX < 6 && ballVelocityX > -6){
+                ballVelocityX = ballVelocityX * -1.1
+            }  
+            else{
+                ballVelocityX = ballVelocityX * -1
+            }
+            ballVelocityY = 0.04 *(ballPositionY - (playerPositionY + 30)) * Math.abs(ballVelocityX)
+            playerTouch = true
+            CPUTouch = false
         }
     }
     if (ballPositionY >= CPUPositionY - 2 && ballPositionY <= CPUPositionY + 62){
         if (ballPositionX >= 768 && CPUTouch == false){
-        ballVelocityX = ballVelocityX * -1.1    
-        ballVelocityY = 0.04 *(ballPositionY - (CPUPositionY + 30)) * Math.abs(ballVelocityX)
-        playerTouch = false
-        CPUTouch = true
-        CPUHitRandom1 = Math.random()
-        CPUHitRandom2 = Math.random()
+            if (ballVelocityX < 6 || ballVelocityX > -6){
+                ballVelocityX = ballVelocityX * -1.1
+            }  
+            else{
+                ballVelocityX = ballVelocityX * -1
+            }  
+            ballVelocityY = 0.04 *(ballPositionY - (CPUPositionY + 30)) * Math.abs(ballVelocityX)
+            playerTouch = false
+            CPUTouch = true
+            CPUHitRandom1 = Math.random()
+            CPUHitRandom2 = Math.random()
         }
     }
     if (ballVelocityX > 2 || ballVelocityX < -2){
@@ -391,6 +401,7 @@ function CPU2Play(){
     }
 }
 
+//imput timers?
 function CPU3Play(){
     if (CPUPositionY > ballPositionY){
         CPUVelocityY = -bodySpeed
@@ -399,8 +410,6 @@ function CPU3Play(){
         CPUVelocityY = bodySpeed
     }
 }
-
-
 
 function pingUpdate(){
     document.getElementById("pingMS").innerHTML = "Ping is " + String(12 + Math.round(Math.random() * 3)) + " ms"

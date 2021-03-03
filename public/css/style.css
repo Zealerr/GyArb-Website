@@ -19,7 +19,7 @@ body {
 /* css variables */
 
 :root{
-  --font: "Source Sans Pro", Arial,"Helvetica Neue",Helvetica,sans-serif;
+  --font: Montserrat, sans-serif;
   --headerclr: #383b3f;
   --headerheight: 60px;
   --pagewidth: 1250px;
@@ -55,7 +55,7 @@ body {
 }
 
 header {
-  font-family: Montserrat, sans-serif;
+  font-family: var(--font);
   width: var(--pagewidth);
   grid-row: header;
   grid-column: header;
@@ -74,7 +74,7 @@ header {
 .logo img {
   height: 100%;
   color: white;
-  font-family: Montserrat, sans-serif;
+  font-family: var(--font);
 }
 
 /* nav. menu */
@@ -250,7 +250,8 @@ form input[type=submit] {
 .gameContent {
   background-color: var(--blue200);
   margin-right: 20px;
-  height: 600px;
+  height: 550px;
+  width: 840px;
 }
 
 .gameContentHide{
@@ -263,40 +264,56 @@ form input[type=submit] {
 
 .pingpong{
   position: relative;
-  top: 30px;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  border: 1px solid black;
-
-}
-
-.gameInfo{
-  width: 800px;
-  display: grid;
-  grid-template-columns: 100px 700px;
-  position: relative;
-  top: 30px;
+  top: 20px;
   left: 50%;
   transform: translate(-50%);
 }
 
-.opponentName{
-  width: 700px;
-  justify-content: right;
-  text-align: right;
+.gameInfo{
+  margin: 20px 0px;
+  width: 600px;
+  height: 40px;
+  display: grid;
+  grid-template-columns: 200px 200px 200px;
+  grid-template-areas: "player vs opponent";
+  position: relative;
+  top: 20px;
+  left: 50%;
+  transform: translate(-50%);
+}
+
+.playerName {
+  grid-column: player;
+}
+.opponentName, .info {
+  grid-column: opponent;
+}
+
+.playerName, .opponentName, .info {
+  width: 200px;
+  line-height: 40px;
+  text-align: center;
+  font-weight: 700;
+  font-family: var(--font);
+}
+
+.vs {
+  display: grid;
+  grid-template-areas: "pScore colon oScore";
+  grid-template-columns: 80px 40px 80px;
+}
+
+.vs * {
+  line-height: 40px;
+  text-align: center;
+  font-weight: 700;
+  font-family: var(--font);
 }
 
 .pingMS{
   width: 100px;
 }
 
-.pingpong{
-  border: 1px solid black;
-  position: relative;
-  top: 30px; 
-  left: 50%;
-  transform: translate(-50%);
-}
 
 .startbutton{
   width: 150px;
@@ -304,7 +321,7 @@ form input[type=submit] {
   vertical-align: middle;
   line-height: 40px;
   text-align: center;
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font);
   font-weight: bold;
   position: relative;
   left: 50%;
@@ -322,7 +339,7 @@ form input[type=submit] {
   vertical-align: middle;
   line-height: 40px;
   text-align: center;
-  font-family: Montserrat, sans-serif;
+  font-family: var(--font);
   font-weight: 700;
   margin-top: 40px;
   position: relative;
@@ -333,10 +350,6 @@ form input[type=submit] {
 
 .startButtonClick{
   font-size: 12px;
-}
-
-.startButtonGone{
-  display: none;
 }
 
 .bigLink {
@@ -454,6 +467,10 @@ footer {
   width: 50px;
   padding-left: 10px;
   padding-right: 10px;
+}
+
+.hidden {
+  display: none;
 }
 
 /* styling of screens smaller than 1250px */

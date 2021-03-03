@@ -92,4 +92,14 @@ def get_leaderboard()
   stats = db.execute("SELECT wins, winPercentage, username FROM gameStats INNER JOIN users ON users.id = gameStats.userId ORDER BY wins DESC, winPercentage DESC")
 end
 
+def get_fakeUser()
+  db = connect_to_db()
+  cpuId = rand(1..10)
+  cpuName = db.execute("SELECT cpuName FROM fakeUsers WHERE cpuId=?", cpuId).first["cpuName"]
+  session[:opponent] = User.new(cpuName, cpuId)
+end
+
+
+
+
 puts "model.rb loaded"

@@ -60,11 +60,11 @@ function drawBall(){
         if (ballPositionX <= 32 && playerTouch == false){
             if (ballVelocityX < 6 && ballVelocityX > -6){
                 ballVelocityX = ballVelocityX * -1.1 
-                console.log("MORE SPEED")
+                // console.log("MORE SPEED")
             }  
             else{
                 ballVelocityX = ballVelocityX * -1
-                console.log("SAME SPEED")
+                // console.log("SAME SPEED")
             }
             ballVelocityY = 0.04 * (ballPositionY - (playerPositionY + 30)) * Math.abs(ballVelocityX)
             playerTouch = true
@@ -75,11 +75,11 @@ function drawBall(){
         if (ballPositionX >= 768 && CPUTouch == false){
             if (ballVelocityX < 6 && ballVelocityX > -6){
                 ballVelocityX = ballVelocityX * -1.1
-                console.log("MORE SPEED")
+                // console.log("MORE SPEED")
             }  
             else{
                 ballVelocityX = ballVelocityX * -1
-                console.log("SAME SPEED")
+                // console.log("SAME SPEED")
             }  
             ballVelocityY = 0.04 *(ballPositionY - (CPUPositionY + 30)) * Math.abs(ballVelocityX)
             playerTouch = false
@@ -176,15 +176,14 @@ function startButtonPressed(){
     startButton.innerHTML = "Searching for opponent..."
     startButton.classList.toggle("startButtonClick")
     startButton.removeEventListener("click", startButtonPressed)
-    document.getElementById("opponentName").innerHTML = "Searching for opponent..."
 }
 
 function startGame(){
     gameReady = false
     CPUID = "CPU2"//CPUIDPool[Math.round(Math.random() * (CPUIDPool.length - 1))]
     CPUName = CPUNamePool[Math.round(Math.random() * (CPUNamePool.length - 1))]
-    document.getElementById("opponentName").innerHTML = "Opponent: " + CPUName
-    startButton.classList.toggle("startButtonGone")
+    document.getElementsByClassName("gameInfo")[0].classList.toggle("hidden")
+    startButton.classList.toggle("hidden")
     newGame();
     gameOn = true
 }
@@ -210,13 +209,13 @@ function newGame(){
         clearInterval(rendering);
         context.fillStyle = "rgba(0, 0, 0, 1)";
         context.fillRect(0, 0, 800, 400)
-        startButton.classList.toggle("startButtonGone")
+        startButton.classList.toggle("hidden")
         if (playerPoints == 5){
-            startButton.innerHTML = "Game over. You win."
+            startButton.innerHTML = "GAME OVER, YOU WIN."
         }else{
-            startButton.innerHTML = "Game over. You lose."
+            startButton.innerHTML = "GAME OVER, YOU LOSE."
         }
-    } 
+    }
 }
 
 function newGameStart(){

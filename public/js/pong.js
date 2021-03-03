@@ -59,23 +59,27 @@ function drawBall(){
     if (ballPositionY >= playerPositionY - 2 && ballPositionY <= playerPositionY + 62){
         if (ballPositionX <= 32 && playerTouch == false){
             if (ballVelocityX < 6 && ballVelocityX > -6){
-                ballVelocityX = ballVelocityX * -1.1
+                ballVelocityX = ballVelocityX * -1.1 
+                console.log("MORE SPEED")
             }  
             else{
                 ballVelocityX = ballVelocityX * -1
+                console.log("SAME SPEED")
             }
-            ballVelocityY = 0.04 *(ballPositionY - (playerPositionY + 30)) * Math.abs(ballVelocityX)
+            ballVelocityY = 0.04 * (ballPositionY - (playerPositionY + 30)) * Math.abs(ballVelocityX)
             playerTouch = true
             CPUTouch = false
         }
     }
     if (ballPositionY >= CPUPositionY - 2 && ballPositionY <= CPUPositionY + 62){
         if (ballPositionX >= 768 && CPUTouch == false){
-            if (ballVelocityX < 6 || ballVelocityX > -6){
+            if (ballVelocityX < 6 && ballVelocityX > -6){
                 ballVelocityX = ballVelocityX * -1.1
+                console.log("MORE SPEED")
             }  
             else{
                 ballVelocityX = ballVelocityX * -1
+                console.log("SAME SPEED")
             }  
             ballVelocityY = 0.04 *(ballPositionY - (CPUPositionY + 30)) * Math.abs(ballVelocityX)
             playerTouch = false
@@ -345,7 +349,7 @@ function CPU2Play(){
             CPUVelocityY = 0
         } 
     }
-    if (ballVelocityX < 0 && ballPositionX < 500 + 250 * CPUHitRandom1){
+    if (ballVelocityX < 0 && ballPositionX < 500 + 250 * CPUHitRandom1 && CPUHitRandom2 > 2 - Math.abs(ballVelocityX) - Math.abs(400-CPUPositionY)/400){
         if (CPUPositionY + 30 > 200 && CPUPositionY + 30 > 220){
             CPUVelocityY = -bodySpeed
         }
@@ -401,7 +405,7 @@ function CPU2Play(){
     }
 }
 
-//imput timers?
+//input timers?
 function CPU3Play(){
     if (CPUPositionY > ballPositionY){
         CPUVelocityY = -bodySpeed

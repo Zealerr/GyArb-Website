@@ -39,9 +39,14 @@ get ('/') do
   slim(:home)
 end
 
+# game page
 get ('/game') do
   for_user()
   slim(:game)
+end
+
+post ('/game') do
+  
 end
 
 #log in page
@@ -67,6 +72,7 @@ get ('/users/account') do
   for_user
   slim(:"users/account")
 end
+
 
 #take username and password from user who is trying to log in and check
 #with database if user exists as well as if the password is correct

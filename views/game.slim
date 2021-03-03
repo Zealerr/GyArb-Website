@@ -8,13 +8,16 @@ main class="gameContent" id="gameContent"
       div class="opponentScore" id="opponentScore" = "0"
     - get_fakeUser()
     div class="opponentName" id="opponentName" = "#{session[:opponent].username}"
-    
-  div id="startButton" class="startButton gradientAnim" = "Find Match"
-
-div class="offlineDiv" id="offlineDiv" = "You are offline. Please check your internet connection."
-
-div class="pingMS hidden" id="pingMS" = "Ping is - ms"  
   
-  / form action="users" method="post" 
-  /   input name="opponent" type="text" value="#{}"
+  div id="startButton" class="startButton gradientAnim" = "Find Match"
+  
+  - if session[:lastGame] != nil 
+    div id="lastGame" class="" = "#{session[:lastGame]}"
+
+  div class="offlineDiv" id="offlineDiv" = "You are offline. Please check your internet connection."
+
+  div class="pingMS hidden" id="pingMS" = "Ping is - ms"  
+
+  form action="/game" method="post" id="gameForm" class="hidden"
+    input name="result" type="text"
 script src="js/pong.js"

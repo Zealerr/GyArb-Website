@@ -46,7 +46,17 @@ get ('/game') do
 end
 
 post ('/game') do
-  
+  result = params[:result]
+  if result == "player"
+    session[:user].add_game(true)
+    session[:opponent].add_game(false)
+    session[:lastGame] = "You won vs #{session[:opponent].username}."
+  else
+    session[:user].add_game(false)
+    session[:opponent].add_game(true)
+    session[:lastGame] = "You lost vs #{session[:opponent].username}."
+  end
+  redirect('/game')
 end
 
 #log in page

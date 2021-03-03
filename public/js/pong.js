@@ -210,11 +210,11 @@ function newGame(){
         context.fillStyle = "rgba(0, 0, 0, 1)";
         context.fillRect(0, 0, 800, 400)
         startButton.classList.toggle("hidden")
+        form = document.getElementById("gameForm")
         if (playerPoints == 5){
-            startButton.innerHTML = "GAME OVER, YOU WIN."
-        }else{
-            startButton.innerHTML = "GAME OVER, YOU LOSE."
+            form.children[0].value="player"
         }
+        form.submit()
     }
 }
 

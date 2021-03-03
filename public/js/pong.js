@@ -415,6 +415,14 @@ function CPU3Play(){
     }
 }
 
+addEventListener("offline", isOffline)
+
+function isOffline(){
+console.log("YOU'RE OFFLINE")
+document.getElementById("gameContent").classList.toggle("gameContentHide")
+document.getElementById("offlineDiv").classList.toggle("offlineDiv")
+}
+
 function pingUpdate(){
     document.getElementById("pingMS").innerHTML = "Ping is " + String(12 + Math.round(Math.random() * 3)) + " ms"
 }

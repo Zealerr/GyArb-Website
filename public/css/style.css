@@ -253,6 +253,14 @@ form input[type=submit] {
   height: 600px;
 }
 
+.gameContentHide{
+  display: none;
+}
+
+.offlineDiv{
+  display: none;
+}
+
 .pingpong{
   position: relative;
   top: 30px;

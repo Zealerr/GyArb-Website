@@ -50,11 +50,11 @@ post ('/game') do
   if result == "player"
     session[:user].add_game(true)
     session[:opponent].add_game(false)
-    session[:lastGame] = "You won vs #{session[:opponent].username}."
+    session[:lastGame] = "You won vs #{session[:opponent].username}. Press 'Find Match' to play again."
   else
     session[:user].add_game(false)
     session[:opponent].add_game(true)
-    session[:lastGame] = "You lost vs #{session[:opponent].username}."
+    session[:lastGame] = "You lost vs #{session[:opponent].username}. Press 'Find Match' to play again."
   end
   redirect('/game')
 end

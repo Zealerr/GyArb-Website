@@ -33,6 +33,7 @@ var CPUHitRandom2 = Math.random()
 var duration = 0
 var durationSet = false
 var shakeStill = 0
+var offlineCheck = false
 
 
 function clearCanvas(){
@@ -416,10 +417,14 @@ function CPU3Play(){
 
 addEventListener("offline", isOffline)
 
+document.addEventListener("visibilitychange", isOffline)
+
 function isOffline(){
-console.log("YOU'RE OFFLINE")
-document.getElementById("gameContent").classList.toggle("gameContentHide")
-document.getElementById("offlineDiv").classList.toggle("offlineDiv")
+    if (offlineCheck == false){
+        document.getElementById("gameContent").classList.toggle("gameContentHide")
+        document.getElementById("offlineDiv").classList.toggle("offlineDiv")
+        offlineCheck = true
+    }
 }
 
 function pingUpdate(){

@@ -14,10 +14,11 @@ main class="gameContent" id="gameContent"
   - if session[:lastGame] != nil 
     div id="lastGame" class="" = "#{session[:lastGame]}"
 
-  div class="offlineDiv" id="offlineDiv" = "You are offline. Please check your internet connection."
-
   div class="pingMS hidden" id="pingMS" = "Ping is - ms"  
-
+  
   form action="/game" method="post" id="gameForm" class="hidden"
     input name="result" type="text"
+
+div class="offlineDiv" id="offlineDiv" = "You were disconnected. Please check your internet connection."
+
 script src="js/pong.js"

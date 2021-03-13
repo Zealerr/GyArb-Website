@@ -34,6 +34,7 @@ var duration = 0
 var durationSet = false
 var shakeStill = 0
 var offlineCheck = false
+var CPUCallTimer = 0
 
 
 function clearCanvas(){
@@ -198,6 +199,7 @@ function newGame(){
     CPUVelocityY = 0
     duration = 1
     durationSet = false
+    CPUCallTimer = 0
     if (playerPoints < 5 && CPUPoints < 5){
         newRound = true
         timeMark = time
@@ -276,7 +278,8 @@ drawPoints();
 }
 
 function CPUPlay(){
-    if (gameOn == true){     
+    if (gameOn == true){   
+        CPUCallTimer += 10  
         if (CPUID == "CPU1"){
             CPU1Play();
         }
@@ -290,110 +293,117 @@ function CPUPlay(){
 }
 
 function CPU1Play(){
-    if (ballVelocityX > 0){
-        if (CPUPositionY + 20 > ballPositionY){
-            CPUVelocityY = -bodySpeed
+    if (CPUCallTimer % 60 == 0){
+        if (ballVelocityX > 0){
+            if (CPUPositionY + 20 > ballPositionY){
+                CPUVelocityY = -bodySpeed
+            }
+            else if (CPUPositionY + 40 < ballPositionY){
+                CPUVelocityY = bodySpeed
+            }
+            else{
+                CPUVelocityY = 0
+            }
         }
-        else if (CPUPositionY + 40 < ballPositionY){
-            CPUVelocityY = bodySpeed
-        }
-        else{
-            CPUVelocityY = 0
-        }
+        if (ballVelocityX < 0){
+            if (CPUPositionY + 30 > 200 + 10 * Math.abs(ballVelocityX)){
+                CPUVelocityY = -bodySpeed
+            }
+            else if (CPUPositionY + 30 < 200 - 10 * Math.abs(ballVelocityX)){
+                CPUVelocityY = bodySpeed
+            }
+            else{
+                CPUVelocityY = 0
+            }
+        } 
     }
-    if (ballVelocityX < 0){
-        if (CPUPositionY + 30 > 200 + 10 * Math.abs(ballVelocityX)){
-            CPUVelocityY = -bodySpeed
-        }
-        else if (CPUPositionY + 30 < 200 - 10 * Math.abs(ballVelocityX)){
-            CPUVelocityY = bodySpeed
-        }
-        else{
-            CPUVelocityY = 0
-        }
-    } 
 }
 
 function CPU2Play(){
-    if (ballVelocityX > 0 && calcDone == false && ballPositionX > 150 + Math.random()*100){
-        ballHitY = ballPositionY + ((800 - ballPositionX)/ballVelocityX) * ballVelocityY
-        if (ballHitY > 400){
-            ballHitY = 800 - ballHitY
-        }
-        if (ballHitY < 0){
-            ballHitY =  ballHitY * -1
-        }
-        if (CPUHitRandom1 * ballVelocityX > 1.75 && Math.abs(ballVelocityY) > 0.5){
-            ballHitY = ballHitY + CPUHitRandom2 * 60 - 30
-        }
-        else if (CPUHitRandom1 * ballVelocityX > 1.5 && Math.abs(ballVelocityY) > 0.5){
-            ballHitY = (4 * ballHitY + CPUPositionY) / 5 + CPUHitRandom2 * 30 - 15
-        }
-        calcDone = true
-    }
-    if (ballPositionY < 8 || ballPositionY > 392 || ballPositionX < 500){
-        calcDone = false
-    }
-    if (ballVelocityX > 0){
-        if (CPUPositionY + 10 > ballHitY){
-            CPUVelocityY = -bodySpeed
-        }
-        else if (CPUPositionY + 50 < ballHitY){
-            CPUVelocityY = bodySpeed
-        }
-        else{
-            CPUVelocityY = 0
-        } 
-    }
-    if (ballVelocityX < 0 && ballPositionX < 500 + 250 * CPUHitRandom1 && CPUHitRandom2 > 2 - Math.abs(ballVelocityX) - Math.abs(400-CPUPositionY)/400){
-        if (CPUPositionY + 30 > 200 && CPUPositionY + 30 > 220){
-            CPUVelocityY = -bodySpeed
-        }
-        else if (CPUPositionY + 30 < 200 && CPUPositionY + 30 < 180){
-            CPUVelocityY = bodySpeed
-        }
-        else{
-            CPUVelocityY = 0
-        }
-    }
-    if (ballVelocityX == 0){
-        if (CPUHitRandom1 > 0.8 && time - timeMark > Math.random() / 2 + 0.25 && duration > 0){
-            if (durationSet == false){
-                duration = 30 + Math.round(Math.random() * 5)
-                durationSet = true
+    if (CPUCallTimer % 60 == 0){
+        if (ballVelocityX > 0 && calcDone == false && ballPositionX > 150 + Math.random()*100){
+            ballHitY = ballPositionY + ((800 - ballPositionX)/ballVelocityX) * ballVelocityY
+            if (ballHitY > 400){
+                ballHitY = 800 - ballHitY
             }
-            duration = duration - 1
-            console.log(duration)
-
-            if (CPUVelocityY >= 0){
-                if (duration % 5 == 0){
-                    if (CPUVelocityY > 0 || shakeStill == 1 || shakeStill == 2 || shakeStill == 3){
-                        CPUVelocityY = 0
-                        if (Math.random() > 0.15){
-                        shakeStill = shakeStill - 1
-                        duration = duration + 1
-                        }
-                    }
-                    else{
-                    CPUVelocityY = -bodySpeed
-                    shakeStill = 3
-                    console.log("up")
-                    }
+            if (ballHitY < 0){
+                ballHitY =  ballHitY * -1
+            }
+            if (CPUHitRandom1 * ballVelocityX > 1.75 && Math.abs(ballVelocityY) > 0.5){
+                ballHitY = ballHitY + CPUHitRandom2 * 60 - 30
+            }
+            else if (CPUHitRandom1 * ballVelocityX > 1.5 && Math.abs(ballVelocityY) > 0.5){
+                ballHitY = (4 * ballHitY + CPUPositionY) / 5 + CPUHitRandom2 * 30 - 15
+            }
+            calcDone = true
+        }
+        if (ballPositionY < 8 || ballPositionY > 392 || ballPositionX < 500){
+            calcDone = false
+        }
+        if (ballVelocityX > 0){
+            if (CPUPositionY + 10 > ballHitY){
+                CPUVelocityY = -bodySpeed
+            }
+            else if (CPUPositionY + 50 < ballHitY){
+                CPUVelocityY = bodySpeed
+            }
+            else{
+                CPUVelocityY = 0
+            } 
+        }
+        if (ballVelocityX < 0 && ballPositionX < 500 + 250 * CPUHitRandom1 && CPUHitRandom2 > 2 - Math.abs(ballVelocityX) - Math.abs(400-CPUPositionY)/400){
+            if (CPUPositionY + 30 > 200 && CPUPositionY + 30 > 220){
+                CPUVelocityY = -bodySpeed
+            }
+            else if (CPUPositionY + 30 < 200 && CPUPositionY + 30 < 180){
+                CPUVelocityY = bodySpeed
+            }
+            else{
+                CPUVelocityY = 0
+            }
+        }
+        if (ballVelocityX > 4 + CPUHitRandom1 * 2 - 1 && ballVelocityY == 0 && CPUPositionY == 170 && CPUHitRandom2 > 0.8){
+            CPUVelocityY == bodySpeed
+        }
+        if (ballVelocityX == 0){
+            if (CPUHitRandom1 > 0.8 && time - timeMark > Math.random() / 2 + 0.25 && duration > 0){
+                if (durationSet == false){
+                    duration = 30 + Math.round(Math.random() * 5)
+                    durationSet = true
                 }
-            }
-            if (CPUVelocityY <= 0){
-                if ((duration - 3) % 5 == 0){
-                    if (CPUVelocityY < 0 || shakeStill == 1 || shakeStill == 2 || shakeStill == 3){
-                        CPUVelocityY = 0
-                        if (Math.random() > 0.15){
+                duration = duration - 1
+                console.log(duration)
+
+                if (CPUVelocityY >= 0){
+                    if (duration % 5 == 0){
+                        if (CPUVelocityY > 0 || shakeStill == 1 || shakeStill == 2 || shakeStill == 3){
+                            CPUVelocityY = 0
+                            if (Math.random() > 0.15){
                             shakeStill = shakeStill - 1
                             duration = duration + 1
+                            }
+                        }
+                        else{
+                        CPUVelocityY = -bodySpeed
+                        shakeStill = 3
+                        console.log("up")
                         }
                     }
-                    else{
-                    CPUVelocityY = bodySpeed
-                    console.log("down")
-                    shakeStill = 3
+                }
+                if (CPUVelocityY <= 0){
+                    if ((duration - 3) % 5 == 0){
+                        if (CPUVelocityY < 0 || shakeStill == 1 || shakeStill == 2 || shakeStill == 3){
+                            CPUVelocityY = 0
+                            if (Math.random() > 0.15){
+                                shakeStill = shakeStill - 1
+                                duration = duration + 1
+                            }
+                        }
+                        else{
+                        CPUVelocityY = bodySpeed
+                        console.log("down")
+                        shakeStill = 3
+                        }
                     }
                 }
             }
@@ -403,11 +413,19 @@ function CPU2Play(){
 
 //input timers?
 function CPU3Play(){
-    if (CPUPositionY > ballPositionY){
-        CPUVelocityY = -bodySpeed
-    }
-    if (CPUPositionY + 60 < ballPositionY){
-        CPUVelocityY = bodySpeed
+    if (CPUCallTimer % 60 == 0){
+        if (CPUPositionY > ballPositionY){
+            CPUVelocityY = -bodySpeed
+        }
+        else if (CPUPositionY + 60 < ballPositionY){
+            CPUVelocityY = bodySpeed
+        }
+        else{
+            CPUVelocityY = 0
+        }
+        if (ballVelocityX > 4 + CPUHitRandom1 * 2 - 1 && ballVelocityY == 0 && CPUPositionY == 170 && CPUHitRandom2 > 0.8){
+            CPUVelocityY == bodySpeed
+        }
     }
 }
 
@@ -439,6 +457,6 @@ function timer(){
 
 pingUpdate();
 setInterval(timer, 1000);
-setInterval(CPUPlay, 60);
+setInterval(CPUPlay, 10);
 setInterval(pingUpdate, 5000)
 var rendering = setInterval(render, 5);

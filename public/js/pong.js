@@ -1,6 +1,7 @@
 const canvas = document.getElementById("pingpong");
 const context = canvas.getContext("2d");
 
+const bodySpeed = 1.5
 var ballPositionX = 400
 var ballVelocityX = Math.round(Math.random())
 if (ballVelocityX == 0){ballVelocityX = -1}
@@ -27,12 +28,10 @@ var timeMark = 0
 var gameReady = false
 var newRound = false
 var opponentWhen = 0
-var bodySpeed = 1.5
 var CPUHitRandom1 = Math.random()
 var CPUHitRandom2 = Math.random()
-var duration = 0
-var durationSet = false
-var shakeStill = 0
+var shakeDuration = 0
+var shakeDurationSet = false
 var offlineCheck = false
 var CPUCallTimer = 0
 var CPU3Timer = 0
@@ -199,8 +198,8 @@ function newGame(){
     playerVelocityY = 0
     CPUPositionY = 170
     CPUVelocityY = 0
-    duration = 1
-    durationSet = false
+    shakeDuration = 0
+    shakeDurationSet = false
     CPUCallTimer = 0
     whereCalcDone = false
     howLongCalcDone = false
@@ -369,49 +368,6 @@ function CPU2Play(){
         if (ballVelocityX > 4 + CPUHitRandom1 * 2 - 1 && ballVelocityY == 0 && CPUPositionY == 170 && CPUHitRandom2 > 0.8){
             CPUVelocityY == bodySpeed
         }
-        if (ballVelocityX == 0){
-            if (CPUHitRandom1 > 0.8 && time - timeMark > Math.random() / 2 + 0.25 && duration > 0){
-                if (durationSet == false){
-                    duration = 30 + Math.round(Math.random() * 5)
-                    durationSet = true
-                }
-                duration = duration - 1
-                console.log(duration)
-
-                if (CPUVelocityY >= 0){
-                    if (duration % 5 == 0){
-                        if (CPUVelocityY > 0 || shakeStill == 1 || shakeStill == 2 || shakeStill == 3){
-                            CPUVelocityY = 0
-                            if (Math.random() > 0.15){
-                            shakeStill = shakeStill - 1
-                            duration = duration + 1
-                            }
-                        }
-                        else{
-                        CPUVelocityY = -bodySpeed
-                        shakeStill = 3
-                        console.log("up")
-                        }
-                    }
-                }
-                if (CPUVelocityY <= 0){
-                    if ((duration - 3) % 5 == 0){
-                        if (CPUVelocityY < 0 || shakeStill == 1 || shakeStill == 2 || shakeStill == 3){
-                            CPUVelocityY = 0
-                            if (Math.random() > 0.15){
-                                shakeStill = shakeStill - 1
-                                duration = duration + 1
-                            }
-                        }
-                        else{
-                        CPUVelocityY = bodySpeed
-                        console.log("down")
-                        shakeStill = 3
-                        }
-                    }
-                }
-            }
-        }
     }
 }
 
@@ -471,6 +427,32 @@ function CPU3Play(){
                     CPU3Timer = 500
                     howLongCalcDone = false
                 }
+            }
+        }
+
+        if (ballVelocityX == 0){
+            if (CPUHitRandom1 > 0.8 && time - timeMark > (Math.random() / 2) + 0.25 && shakeDurationSet == false){
+                shakeDuration = 200 + (10 * Math.round(Math.random() * 120))
+                shakeDurationSet = true
+                console.log(shakeDuration)
+            }
+            if (shakeDurationSet == true){
+                shakeDuration -= 10
+                if ((shakeDuration - 70) % 320 == 0 || (shakeDuration - 70) % 160 == 0){
+                    console.log("stop")
+                    CPUVelocityY = 0
+                }
+                else if (shakeDuration % 320 == 0 && shakeDuration > 0){
+                    console.log("ya")
+                    CPUVelocityY = -bodySpeed
+                }
+                else if (shakeDuration % 160 == 0 && shakeDuration > 0){
+                    console.log("na")
+                    CPUVelocityY = bodySpeed
+                } 
+            }
+            if (shakeDuration < 0){
+                CPUVelocityY = 0
             }
         }
         

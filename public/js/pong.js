@@ -182,7 +182,7 @@ function startButtonPressed(){
 
 function startGame(){
     gameReady = false
-    CPUID = "CPU3"//CPUIDPool[Math.round(Math.random() * (CPUIDPool.length - 1))]
+    CPUID = CPUIDPool[Math.round(Math.random() * (CPUIDPool.length - 1))]
     CPUName = CPUNamePool[Math.round(Math.random() * (CPUNamePool.length - 1))]
     document.getElementsByClassName("gameInfo")[0].classList.toggle("hidden")
     startButton.classList.toggle("hidden")

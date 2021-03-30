@@ -20,7 +20,6 @@ var CPUTouch = false
 var ballHitY = 200
 var whereCalcDone = false
 var CPUID = ""
-var CPUIDPool = ["CPU1", "CPU2", "CPU3", "CPU4", "CPU5"]
 var time = 0
 var timeMark = 0
 var gameReady = false
@@ -180,7 +179,7 @@ function startButtonPressed(){
 
 function startGame(){
     gameReady = false
-    CPUID = CPUIDPool[Math.round(Math.random() * (CPUIDPool.length - 1))]
+    CPUID = document.getElementById("opponentName").textContent
     document.getElementsByClassName("gameInfo")[0].classList.toggle("hidden")
     startButton.classList.toggle("hidden")
     newGame();
@@ -290,19 +289,19 @@ drawPoints();
 function CPUPlay(){
     if (gameOn == true){   
         CPUCallTimer += 10  
-        if (CPUID == "CPU1"){
+        if (CPUID == "Wee" || CPUID == "KCWA"){
             CPU1Play();
         }
-        if (CPUID == "CPU2"){
+        if (CPUID == "newplayer12" || CPUID == "Shipwreck"){
             CPU2Play();
         }
-        if (CPUID == "CPU3"){
+        if (CPUID == "Trez" || CPUID == "BratSoup"){
             CPU3Play();
         }
-        if (CPUID == "CPU4"){
+        if (CPUID == "Mixer" || CPUID == "Monster"){
             CPU4Play();
         }
-        if (CPUID == "CPU5"){
+        if (CPUID == "Lalatina" || CPUID == "Xyz"){
             CPU5Play();
         }
     }
@@ -388,11 +387,11 @@ function CPU2Play(){
 }
 
 
-//medium difficulty / decent reactions, good accuracy
+//medium difficulty / decent reactions, medium accuracy
 function CPU3Play(){
     if (CPUCallTimer % 60 == 0){
         if (ballVelocityX > 0 && whereCalcDone == false){
-            ballHitY = ballPositionY + ((800 - ballPositionX)/ballVelocityX) * ballVelocityY
+            ballHitY = ballPositionY + ((800 - ballPositionX)/ballVelocityX) * ballVelocityY + CPUHitRandom1 * ballVelocityX * ballVelocityY
             if (ballHitY > 393){
                 ballHitY = 793 - ballHitY
             }

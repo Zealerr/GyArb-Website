@@ -20,9 +20,7 @@ var CPUTouch = false
 var ballHitY = 200
 var whereCalcDone = false
 var CPUID = ""
-var CPUName = ""
 var CPUIDPool = ["CPU1", "CPU2", "CPU3", "CPU4", "CPU5"]
-var CPUNamePool = ["Mark", "Sandra", "Opponent", "dddddd", "LAVA", "help", "mariah", "abc", "Ludwig", "lukas", "maya"]
 var time = 0
 var timeMark = 0
 var gameReady = false
@@ -183,7 +181,6 @@ function startButtonPressed(){
 function startGame(){
     gameReady = false
     CPUID = CPUIDPool[Math.round(Math.random() * (CPUIDPool.length - 1))]
-    CPUName = CPUNamePool[Math.round(Math.random() * (CPUNamePool.length - 1))]
     document.getElementsByClassName("gameInfo")[0].classList.toggle("hidden")
     startButton.classList.toggle("hidden")
     newGame();
